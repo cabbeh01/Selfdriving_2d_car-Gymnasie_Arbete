@@ -18,8 +18,6 @@ var config = {
             //debug: true
         }
     }
-
-
 }
 
 var game = new Phaser.Game(config);
@@ -28,14 +26,18 @@ let rotate = 0;
 function preload ()
 {
     this.load.image("car", "car.png");
+    this.load.image("road", "road1.png");
 }
 
 function create ()
 {
-    car = this.matter.add.image(100, 150, 'car');
+    road = this.matter.add.image(500, 150, 'road');
+    car = this.matter.add.image(500, 150, 'car');
     cursors = this.input.keyboard.createCursorKeys();
-    xText = this.add.text(16, 16, 'X: 0', { fontSize: '32px', fill: '#000' });
-    yText = this.add.text(16, 52, 'Y: 0', { fontSize: '32px', fill: '#000' });
+    xText = this.add.text(16, 16, 'X: 0', { fontSize: '32px', fill: '#fff' });
+    yText = this.add.text(16, 52, 'Y: 0', { fontSize: '32px', fill: '#fff' });
+    car.setFriction(0.8);
+    car.setFriction(0.8);
     
 }
 
@@ -47,20 +49,16 @@ function update ()
 
     
     if(cursors.down.isDown){
-        car.setVelocityY(10);
+        car.thrustBack(0.0001);
     }
-    else if(cursors.up.isDown){
-        car.setVelocityY(-10);
-        car.setSensor(2)
+    if(cursors.up.isDown){
+        car.thrust(0.0001);
     }
-    else if(cursors.left.isDown){
-        rotate+=1;
+    if(cursors.left.isDown){
+        rotate-=.02;
     }
-    else if(cursors.right.isDown){
-        rotate-=1;
-    }
-    else{
-        car.setVelocity(0,0);
+    if(cursors.right.isDown){
+        rotate+=.02;
     }
 
     car.rotation = rotate;
