@@ -22,11 +22,11 @@ var config = {
 
 var game = new Phaser.Game(config);
 let rotate = 0;
-
 function preload ()
 {
     this.load.image("car", "./Graphics/car.png");
-    this.load.image("road", "./Graphics/road1.png");
+    this.load.image("road", "./Graphics/road.png");
+
 }
 
 function create ()
