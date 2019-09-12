@@ -25,14 +25,14 @@ let rotate = 0;
 
 function preload ()
 {
-    this.load.image("car", "car.png");
-    this.load.image("road", "road1.png");
+    this.load.image("car", "./Graphics/car.png");
+    this.load.image("road", "./Graphics/road1.png");
 }
 
 function create ()
 {
     road = this.matter.add.image(500, 150, 'road');
-    car = this.matter.add.image(500, 150, 'car');
+    car = this.matter.add.image(500, 350, 'car');
     cursors = this.input.keyboard.createCursorKeys();
     xText = this.add.text(16, 16, 'X: 0', { fontSize: '32px', fill: '#fff' });
     yText = this.add.text(16, 52, 'Y: 0', { fontSize: '32px', fill: '#fff' });
