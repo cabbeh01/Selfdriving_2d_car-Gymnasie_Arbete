@@ -10,56 +10,82 @@ var config = {
         update: update
     },
     physics:{
-        default: "matter",
-        matter: {
+        default: "arcade",
+        /*matter: {
             gravity: {
                 y: 0
             }
             //debug: true
-        }
+        }*/
     }
 }
 
 var game = new Phaser.Game(config);
 let rotate = 0;
 
+let nCar ={
+    x:500,
+    y:700,
+    velocityX:0,
+    velocityY:0,
+    drag:.1,
+    angularVelocity:0.00005,
+    angularDrag: 0.9,
+    power:1.5,
+    turnspeed:.005,
+
+}
 function preload ()
 {
+
+    //Load graphics
     this.load.image("car", "./Graphics/car.png");
-    this.load.image("road", "./Graphics/road1.png");
+    this.load.image("road", "./Graphics/road.png");
+
 }
 
 function create ()
 {
-    road = this.matter.add.image(500, 150, 'road');
-    car = this.matter.add.image(500, 350, 'car');
+    road = this.physics.add.sprite(600, 400, 'road');
+    //car = this.matter.add.image(nCar.x, nCar.y, 'car');
+    car = this.physics.add.sprite(nCar.x, nCar.y, 'car');
+
     cursors = this.input.keyboard.createCursorKeys();
+
     xText = this.add.text(16, 16, 'X: 0', { fontSize: '32px', fill: '#fff' });
     yText = this.add.text(16, 52, 'Y: 0', { fontSize: '32px', fill: '#fff' });
-    car.setFriction(0.8);
-    car.setFriction(0.8);
     
 }
 
 function update ()
 {
-    
     xText.setText("X: "+ Math.round(car.x));
     yText.setText("Y: "+ Math.round(car.y));
 
-    
+    carUpdate();
     if(cursors.down.isDown){
-        car.thrustBack(0.0001);
+        nCar.velocityX -= Math.cos(car.rotation) * nCar.power;
+        nCar.velocityY -= Math.sin(car.rotation) * nCar.power;
     }
     if(cursors.up.isDown){
-        car.thrust(0.0001);
+        nCar.velocityX += Math.cos(car.rotation) * nCar.power;
+        nCar.velocityY += Math.sin(car.rotation) * nCar.power;
     }
     if(cursors.left.isDown){
-        rotate-=.02;
+        nCar.angularVelocity -= nCar.turnspeed;
     }
     if(cursors.right.isDown){
-        rotate+=.02;
+        nCar.angularVelocity += nCar.turnspeed;
     }
+    
+}
 
-    car.rotation = rotate;
+
+function carUpdate(){
+    car.x += nCar.velocityX;
+    car.y += nCar.velocityY;
+    nCar.velocityX *= nCar.drag;
+    nCar.velocityY *= nCar.drag;
+    car.rotation += nCar.angularVelocity;
+    nCar.angularVelocity *= nCar.angularDrag;
 }
