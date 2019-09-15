@@ -23,18 +23,7 @@ var config = {
 var game = new Phaser.Game(config);
 let rotate = 0;
 
-let nCar ={
-    x:500,
-    y:700,
-    velocityX:0,
-    velocityY:0,
-    drag:.1,
-    angularVelocity:0.00005,
-    angularDrag: 0.9,
-    power:1.5,
-    turnspeed:.005,
-
-}
+let nCar = new Car(500,300);
 function preload ()
 {
 
@@ -54,6 +43,7 @@ function create ()
 
     xText = this.add.text(16, 16, 'X: 0', { fontSize: '32px', fill: '#fff' });
     yText = this.add.text(16, 52, 'Y: 0', { fontSize: '32px', fill: '#fff' });
+    rText = this.add.text(16, 88, '0°', { fontSize: '32px', fill: '#fff' });
     
 }
 
@@ -61,31 +51,21 @@ function update ()
 {
     xText.setText("X: "+ Math.round(car.x));
     yText.setText("Y: "+ Math.round(car.y));
+    rText.setText(Math.round(car.rotation*(180/Math.PI)) +"°");
 
-    carUpdate();
+    nCar.Update();
     if(cursors.down.isDown){
-        nCar.velocityX -= Math.cos(car.rotation) * nCar.power;
-        nCar.velocityY -= Math.sin(car.rotation) * nCar.power;
+        nCar.MoveBackwards(car.rotation);
     }
     if(cursors.up.isDown){
-        nCar.velocityX += Math.cos(car.rotation) * nCar.power;
-        nCar.velocityY += Math.sin(car.rotation) * nCar.power;
+        nCar.MoveForward(car.rotation);
     }
     if(cursors.left.isDown){
-        nCar.angularVelocity -= nCar.turnspeed;
+        nCar.Steer(-1);
     }
     if(cursors.right.isDown){
-        nCar.angularVelocity += nCar.turnspeed;
+        nCar.Steer(1);
     }
     
 }
 
-
-function carUpdate(){
-    car.x += nCar.velocityX;
-    car.y += nCar.velocityY;
-    nCar.velocityX *= nCar.drag;
-    nCar.velocityY *= nCar.drag;
-    car.rotation += nCar.angularVelocity;
-    nCar.angularVelocity *= nCar.angularDrag;
-}
