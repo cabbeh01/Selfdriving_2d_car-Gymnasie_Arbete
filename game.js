@@ -43,6 +43,7 @@ function create ()
 
     xText = this.add.text(16, 16, 'X: 0', { fontSize: '32px', fill: '#fff' });
     yText = this.add.text(16, 52, 'Y: 0', { fontSize: '32px', fill: '#fff' });
+    rText = this.add.text(16, 88, '0°', { fontSize: '32px', fill: '#fff' });
     
 }
 
@@ -50,6 +51,7 @@ function update ()
 {
     xText.setText("X: "+ Math.round(car.x));
     yText.setText("Y: "+ Math.round(car.y));
+    rText.setText(Math.round(car.rotation*(180/Math.PI)) +"°");
 
     nCar.Update();
     if(cursors.down.isDown){
