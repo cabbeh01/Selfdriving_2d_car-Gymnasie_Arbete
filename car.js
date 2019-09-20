@@ -2,11 +2,11 @@ class Car{
 
     velocityX=0;
     velocityY=0;
-    drag=.1;
-    angularVelocity=0.00005;
-    angularDrag = 0.9;
-    power = 1.5;
-    turnspeed = .005;
+    drag=0.92;
+    angularVelocity=0.001;
+    angularDrag = 0.1;
+    power = 0.35;
+    turnspeed = .07;
     
     constructor(x,y){
         this.x = x;
@@ -26,6 +26,8 @@ class Car{
         this.velocityX -= Math.cos(rotation) * this.power;
         this.velocityY -= Math.sin(rotation) * this.power;
     }
+
+
 
     MoveForward(){
         this.velocityX += Math.cos(car.rotation) * this.power;
