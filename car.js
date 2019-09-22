@@ -1,5 +1,5 @@
-class Car{
-
+class Car {
+    
     velocityX=0;
     velocityY=0;
     drag=0.92;
@@ -7,10 +7,16 @@ class Car{
     angularDrag = 0.1;
     power = 0.35;
     turnspeed = .07;
+
+    startX;
+    startY;
+    car;
     
-    constructor(x,y){
+    constructor(x,y,game){
         this.x = x;
+        this.startX = x;
         this.y = y;
+        this.startY = y;
     }
 
     Update(){
@@ -29,11 +35,18 @@ class Car{
 
 
 
-    MoveForward(){
-        this.velocityX += Math.cos(car.rotation) * this.power;
-        this.velocityY += Math.sin(car.rotation) * this.power;
+    MoveForward(rotation){
+        this.velocityX += Math.cos(rotation) * this.power;
+        this.velocityY += Math.sin(rotation) * this.power;
     }
 
+    ResetCar(x,y,rotation){
+        car.x = this.startX;
+        car.y = this.startY;
+        car.rotation = 0;
+        this.velocityX = 0;
+        this.velocityY = 0;
+    }
     //Höger är 1 och vänster -1
     Steer(a){
         if(a === -1){

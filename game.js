@@ -26,10 +26,10 @@ var fps ={
     frameduration: (1000/ 60)
 }
 
-var game = new Phaser.Game(config);
+let game = new Phaser.Game(config);
 let rotate = 0;
+let nCar = new Car(500,153);
 
-let nCar = new Car(500,150);
 
 
 function preload ()
@@ -50,7 +50,11 @@ function create ()
 
     road = this.matter.add.sprite(800, 400, 'road',"road",{shape: shapes.road});
     //car = this.matter.add.image(nCar.x, nCar.y, 'car');
+
+    
     car = this.matter.add.sprite(nCar.x, nCar.y, 'car',"car",{shape: shapes.car});
+    //car2 = this.matter.add.sprite(nCar.x + 5, nCar.y+ 5, 'car',"car",{shape: shapes.car});
+
 
     cursors = this.input.keyboard.createCursorKeys();
 
@@ -59,7 +63,15 @@ function create ()
     rText = this.add.text(16, 88, '0°', { fontSize: '32px', fill: '#fff' });
     fpsText = this.add.text(1130, 16, 'FPS: ', { fontSize: '32px', fill: '#fff' });
     fps2Text = this.add.text(1130, 52, 'FPS: ', { fontSize: '32px', fill: '#fff' });
-    
+
+
+    //Collision detection between car and road
+    this.matter.world.on('collisionstart', function (event, bodyA, bodyB) {
+        console.log(bodyA.parent.label);
+        if(bodyA.parent.label === "road" || bodyB.parent.label === "road"){
+            nCar.ResetCar(car.x,car.y,car.rotation);
+        }
+    });
 }
 
 function update (timestamp, elapsed)
@@ -89,7 +101,7 @@ function physicsRend(currentframe) {
         nCar.Steer(1);
     }
 
-
+    
 }
 function renderGrapichs(){
     //rendering stuff here
@@ -98,5 +110,7 @@ function renderGrapichs(){
     rText.setText(Math.round(car.rotation*(180/Math.PI)) +"°");
     fpsText.setText("FPS Rend: " + Math.round(game.loop.actualFps));
     fps2Text.setText("FPS Phys: " + Math.round(fps.fps));
+
+    
 }
 
