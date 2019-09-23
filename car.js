@@ -12,6 +12,8 @@ class Car {
     startY;
     car = new Object;
     
+    
+
     constructor(x,y){
         this.x = x;
         this.startX = x;

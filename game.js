@@ -30,7 +30,9 @@ let game = new Phaser.Game(config);
 let rotate = 0;
 let nCar = new Car(500,153);
 
-
+const COLORLINE = 0x00ffff;
+var tracker1;
+var tracker2;
 
 function preload ()
 {
@@ -53,10 +55,13 @@ function create ()
 
     
     
+
     nCar.car = this.matter.add.sprite(nCar.x, nCar.y, 'car',"car",{shape: shapes.car});
     //car = this.matter.add.sprite(nCar.x, nCar.y, 'car',"car",{shape: shapes.car});
 
-
+    sensor1 = this.add.rectangle(0, 0, 40, 4, 0x00ff00);
+    sensor2 = this.add.rectangle(0, 0, 40, 4, 0xff0000);
+    
     cursors = this.input.keyboard.createCursorKeys();
 
     xText = this.add.text(16, 16, 'X: 0', { fontSize: '32px', fill: '#fff' });
@@ -66,22 +71,86 @@ function create ()
     fps2Text = this.add.text(1130, 52, 'FPS: ', { fontSize: '32px', fill: '#fff' });
 
 
+
+
+
+    //
+    //Trackers in scene
+    //Vertical lines
+    tracker1 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker2 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker3 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker4 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker5 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker9 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker10 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+
+    //Horizontell lines
+    tracker6 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
+    tracker7 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
+    tracker8 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
+    tracker11 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
+    
+    
+    tracker12 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker13 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker14 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker15 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker17 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker18 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker19 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker20 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker21 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker22 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker23 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker24 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker25 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker26 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker27 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker28 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker29 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker30 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+
+
+    tracker1.setPosition(560, 154);
+    tracker2.setPosition(650, 154);
+    tracker3.setPosition(740, 154);
+    tracker4.setPosition(830, 154);
+    tracker5.setPosition(930, 154);
+    tracker6.setPosition(982, 206);
+    tracker7.setPosition(982, 296);
+    tracker8.setPosition(982, 386);
+    tracker9.setPosition(930, 460);
+    tracker10.setPosition(850, 460);
+    tracker11.setPosition(794, 510);
+
+    //
+
+
+
+
+
     //Collision detection between car and road
     this.matter.world.on('collisionstart', function (event, bodyA, bodyB) {
         console.log(bodyA.parent.label);
+        console.log(bodyB.parent.label);
         if(bodyA.parent.label === "road" || bodyB.parent.label === "road"){
             nCar.ResetCar(nCar.car.x,nCar.car.y,nCar.car.rotation);
         }
     });
+
+    
 }
 
 function update (timestamp, elapsed)
 {
+    //Counts to correct frame then runs physicsRend
     fps.lag += elapsed;
     while(fps.lag >= fps.frameduration){
         physicsRend(fps.frameduration);
         fps.lag -= fps.frameduration;
     }
+    
     renderGrapichs();
 }
 
@@ -112,6 +181,15 @@ function renderGrapichs(){
     fpsText.setText("FPS Rend: " + Math.round(game.loop.actualFps));
     fps2Text.setText("FPS Phys: " + Math.round(fps.fps));
 
+    var point1 = nCar.car.getTopCenter();
+    var point2 = nCar.car.getBottomCenter();
+
+    sensor1.setPosition(point1.x, point1.y);
+    sensor2.setPosition(point2.x, point2.y);
+}
+
+function DrawEveryRoadLine(){
     
 }
+
 
