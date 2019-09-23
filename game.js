@@ -52,8 +52,9 @@ function create ()
     //car = this.matter.add.image(nCar.x, nCar.y, 'car');
 
     
-    car = this.matter.add.sprite(nCar.x, nCar.y, 'car',"car",{shape: shapes.car});
-    //car2 = this.matter.add.sprite(nCar.x + 5, nCar.y+ 5, 'car',"car",{shape: shapes.car});
+    
+    nCar.car = this.matter.add.sprite(nCar.x, nCar.y, 'car',"car",{shape: shapes.car});
+    //car = this.matter.add.sprite(nCar.x, nCar.y, 'car',"car",{shape: shapes.car});
 
 
     cursors = this.input.keyboard.createCursorKeys();
@@ -69,7 +70,7 @@ function create ()
     this.matter.world.on('collisionstart', function (event, bodyA, bodyB) {
         console.log(bodyA.parent.label);
         if(bodyA.parent.label === "road" || bodyB.parent.label === "road"){
-            nCar.ResetCar(car.x,car.y,car.rotation);
+            nCar.ResetCar(nCar.car.x,nCar.car.y,nCar.car.rotation);
         }
     });
 }
@@ -89,15 +90,15 @@ function physicsRend(currentframe) {
     //phys checks and server IO events update state of entities here
     nCar.Update();
     if(cursors.down.isDown){
-        nCar.MoveBackwards(car.rotation);
+        nCar.MoveBackwards(nCar.car.rotation);
     }
     if(cursors.up.isDown){
-        nCar.MoveForward(car.rotation);
+        nCar.MoveForward(nCar.car.rotation);
     }
-    if(cursors.left.isDown){
+    if(cursors.left.isDown && cursors.up.isDown){
         nCar.Steer(-1);
     }
-    if(cursors.right.isDown){
+    if(cursors.right.isDown && cursors.up.isDown){
         nCar.Steer(1);
     }
 
@@ -105,9 +106,9 @@ function physicsRend(currentframe) {
 }
 function renderGrapichs(){
     //rendering stuff here
-    xText.setText("X: "+ Math.round(car.x));
-    yText.setText("Y: "+ Math.round(car.y));
-    rText.setText(Math.round(car.rotation*(180/Math.PI)) +"°");
+    xText.setText("X: "+ Math.round(nCar.car.x));
+    yText.setText("Y: "+ Math.round(nCar.car.y));
+    rText.setText(Math.round(nCar.car.rotation*(180/Math.PI)) +"°");
     fpsText.setText("FPS Rend: " + Math.round(game.loop.actualFps));
     fps2Text.setText("FPS Phys: " + Math.round(fps.fps));
 

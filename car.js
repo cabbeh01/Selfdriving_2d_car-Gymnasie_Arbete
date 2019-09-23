@@ -10,9 +10,9 @@ class Car {
 
     startX;
     startY;
-    car;
+    car = new Object;
     
-    constructor(x,y,game){
+    constructor(x,y){
         this.x = x;
         this.startX = x;
         this.y = y;
@@ -20,30 +20,32 @@ class Car {
     }
 
     Update(){
-        car.x += this.velocityX;
-        car.y += this.velocityY;
+        this.car.x += this.velocityX;
+        this.car.y += this.velocityY;
         this.velocityX *= this.drag;
         this.velocityY *= this.drag;
-        car.rotation += this.angularVelocity;
+        this.car.rotation += this.angularVelocity;
         this.angularVelocity *= this.angularDrag;
     }
 
-    MoveBackwards(rotation){
-        this.velocityX -= Math.cos(rotation) * this.power;
-        this.velocityY -= Math.sin(rotation) * this.power;
+    MoveBackwards(){
+        this.velocityX -= Math.cos(this.car.rotation) * this.power;
+        this.velocityY -= Math.sin(this.car.rotation) * this.power;
     }
 
-
-
-    MoveForward(rotation){
-        this.velocityX += Math.cos(rotation) * this.power;
-        this.velocityY += Math.sin(rotation) * this.power;
+    GettotalVelocity(){
+        return velocityX + velocityY;
     }
 
-    ResetCar(x,y,rotation){
-        car.x = this.startX;
-        car.y = this.startY;
-        car.rotation = 0;
+    MoveForward(){
+        this.velocityX += Math.cos(this.car.rotation) * this.power;
+        this.velocityY += Math.sin(this.car.rotation) * this.power;
+    }
+
+    ResetCar(){
+        this.car.x = this.startX;
+        this.car.y = this.startY;
+        this.car.rotation = 0;
         this.velocityX = 0;
         this.velocityY = 0;
     }
