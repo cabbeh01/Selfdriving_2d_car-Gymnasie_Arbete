@@ -90,15 +90,21 @@ function create ()
     tracker7 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
     tracker8 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
     tracker11 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
+    tracker12 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
     
     
-    tracker12 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-    tracker13 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-    tracker14 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-    tracker15 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-    tracker17 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-    tracker18 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-    tracker19 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
+    tracker13 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker14 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker15 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker16 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker17 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker18 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+
+
+    tracker19 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+
+
+
     tracker20 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
     tracker21 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
     tracker22 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
@@ -123,6 +129,13 @@ function create ()
     tracker9.setPosition(930, 460);
     tracker10.setPosition(850, 460);
     tracker11.setPosition(794, 510);
+    tracker12.setPosition(794, 602);
+    tracker13.setPosition(740,659);
+    tracker14.setPosition(650,660);
+    tracker15.setPosition(560,660);
+    tracker16.setPosition(470,660);
+    tracker17.setPosition(380,660);
+
 
     //
 
@@ -186,10 +199,6 @@ function renderGrapichs(){
 
     sensor1.setPosition(point1.x, point1.y);
     sensor2.setPosition(point2.x, point2.y);
-}
-
-function DrawEveryRoadLine(){
-    
 }
 
 
