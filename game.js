@@ -36,6 +36,7 @@ var tracker2;
 
 function preload ()
 {
+    this.load.image("ground", "./Graphics/background2.png");
     //Load graphics
     this.load.image("car", "./Graphics/car.png");
     this.load.image("road", "./Graphics/road.png");
@@ -49,7 +50,7 @@ function create ()
 {
 
     var shapes = this.cache.json.get('shapes');
-
+    this.add.image(700, 400, 'ground');
     road = this.matter.add.sprite(800, 400, 'road',"road",{shape: shapes.road});
     //car = this.matter.add.image(nCar.x, nCar.y, 'car');
 
@@ -60,7 +61,7 @@ function create ()
     //car = this.matter.add.sprite(nCar.x, nCar.y, 'car',"car",{shape: shapes.car});
 
     sensor1 = this.add.rectangle(0, 0, 40, 4, 0x00ff00);
-    sensor2 = this.add.rectangle(0, 0, 40, 4, 0xff0000);
+    sensor2 = this.add.rectangle(0, 0, 40, 4, 0x00ff00);
     
     cursors = this.input.keyboard.createCursorKeys();
 
@@ -84,6 +85,19 @@ function create ()
     tracker5 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
     tracker9 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
     tracker10 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker13 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker14 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker15 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker16 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker17 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker19 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker20 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker21 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker25 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker26 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker27 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker29 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker30 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
 
     //Horizontell lines
     tracker6 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
@@ -91,33 +105,13 @@ function create ()
     tracker8 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
     tracker11 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
     tracker12 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
-    
-    
-    tracker13 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker14 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker15 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker16 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker17 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker18 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker18 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
+    tracker22 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
+    tracker23 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
+    tracker24 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
+    tracker28 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
 
-
-    tracker19 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-
-
-
-    tracker20 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-    tracker21 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-    tracker22 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-    tracker23 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-    tracker24 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-    tracker25 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-    tracker26 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-    tracker27 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-    tracker28 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-    tracker29 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-    tracker30 = this.add.rectangle(0, 0, 40, 4, COLORLINE);
-
-
+    //Set position of tracker
     tracker1.setPosition(560, 154);
     tracker2.setPosition(650, 154);
     tracker3.setPosition(740, 154);
@@ -135,8 +129,19 @@ function create ()
     tracker15.setPosition(560,660);
     tracker16.setPosition(470,660);
     tracker17.setPosition(380,660);
-
-
+    tracker18.setPosition(325,605);
+    tracker19.setPosition(380,552);
+    tracker20.setPosition(470,552);
+    tracker21.setPosition(560,552);
+    tracker22.setPosition(613,500);
+    tracker23.setPosition(613,404);
+    tracker24.setPosition(613,314);
+    tracker25.setPosition(560,261);
+    tracker26.setPosition(470,261);
+    tracker27.setPosition(380,261);
+    tracker28.setPosition(325,208);
+    tracker29.setPosition(470,154);
+    tracker30.setPosition(380,154);
     //
 
 
@@ -194,8 +199,8 @@ function renderGrapichs(){
     fpsText.setText("FPS Rend: " + Math.round(game.loop.actualFps));
     fps2Text.setText("FPS Phys: " + Math.round(fps.fps));
 
-    var point1 = nCar.car.getTopCenter();
-    var point2 = nCar.car.getBottomCenter();
+    var point1 = nCar.car.getTopRight();
+    var point2 = nCar.car.getBottomLeft();
 
     sensor1.setPosition(point1.x, point1.y);
     sensor2.setPosition(point2.x, point2.y);
