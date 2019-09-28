@@ -10,6 +10,7 @@ class Car {
 
     startX;
     startY;
+    countTracks = 0;
     car = new Object;
     
     
@@ -50,6 +51,7 @@ class Car {
         this.car.rotation = 0;
         this.velocityX = 0;
         this.velocityY = 0;
+        this.countTracks = 0;
     }
     //Höger är 1 och vänster -1
     Steer(a){

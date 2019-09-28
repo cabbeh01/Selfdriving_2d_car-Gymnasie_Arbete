@@ -31,6 +31,11 @@ let rotate = 0;
 let nCar = new Car(500,153);
 
 const COLORLINE = 0x00ffff;
+const opt ={
+    isSensor: true,
+    label: "tracker"
+}
+
 var tracker1;
 var tracker2;
 
@@ -68,84 +73,91 @@ function create ()
     xText = this.add.text(16, 16, 'X: 0', { fontSize: '32px', fill: '#fff' });
     yText = this.add.text(16, 52, 'Y: 0', { fontSize: '32px', fill: '#fff' });
     rText = this.add.text(16, 88, '0°', { fontSize: '32px', fill: '#fff' });
+    travelText = this.add.text(16, 88, 'Travel: ', { fontSize: '32px', fill: '#fff' });
+
     fpsText = this.add.text(1130, 16, 'FPS: ', { fontSize: '32px', fill: '#fff' });
     fps2Text = this.add.text(1130, 52, 'FPS: ', { fontSize: '32px', fill: '#fff' });
 
 
 
-
-
-    //
     //Trackers in scene
-    //Vertical lines
-    tracker1 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker2 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker3 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker4 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker5 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker9 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker10 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker13 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker14 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker15 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker16 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker17 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker19 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker20 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker21 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker25 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker26 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker27 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker29 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
-    tracker30 = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+    tracker = [];
+    trackerMatter = [];
+    for(let i = 0; i<30;i++){
+        if(i<5 || 7<i && i<10 || 11<i && i<17 || 17<i && i<21 || 23<i && i<27 || 27<i && i<30){
+            tracker[i] = this.add.rectangle(0, 0, 4, 80, COLORLINE);
+        }
+        else if(4<i && i<8 || 9<i && i<12 || i == 17 || i == 27 || 20<i && i<24){
+            tracker[i] = this.add.rectangle(0, 0, 80, 4, COLORLINE); //
+        }
+    }
 
-    //Horizontell lines
-    tracker6 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
-    tracker7 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
-    tracker8 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
-    tracker11 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
-    tracker12 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
-    tracker18 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
-    tracker22 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
-    tracker23 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
-    tracker24 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
-    tracker28 = this.add.rectangle(0, 0, 80, 4, COLORLINE);
+    //Set position of visible tracker
+    tracker[0].setPosition(560, 154);
+    tracker[1].setPosition(650, 154);
+    tracker[2].setPosition(740, 154);
+    tracker[3].setPosition(830, 154);
+    tracker[4].setPosition(930, 154);
+    tracker[5].setPosition(982, 206);
+    tracker[6].setPosition(982, 296);
+    tracker[7].setPosition(982, 386);
+    tracker[8].setPosition(930, 460);
+    tracker[9].setPosition(850, 460);
+    tracker[10].setPosition(794, 510);
+    tracker[11].setPosition(794, 602);
+    tracker[12].setPosition(740,659);
+    tracker[13].setPosition(650,660);
+    tracker[14].setPosition(560,660);
+    tracker[15].setPosition(470,660);
+    tracker[16].setPosition(380,660);
+    tracker[17].setPosition(325,605);
+    tracker[18].setPosition(380,552);
+    tracker[19].setPosition(470,552);
+    tracker[20].setPosition(560,552);
+    tracker[21].setPosition(613,500);
+    tracker[22].setPosition(613,404);
+    tracker[23].setPosition(613,314);
+    tracker[24].setPosition(560,261);
+    tracker[25].setPosition(470,261);
+    tracker[26].setPosition(380,261);
+    tracker[27].setPosition(325,208);
+    tracker[28].setPosition(470,154);
+    tracker[29].setPosition(380,154);
 
-    //Set position of tracker
-    tracker1.setPosition(560, 154);
-    tracker2.setPosition(650, 154);
-    tracker3.setPosition(740, 154);
-    tracker4.setPosition(830, 154);
-    tracker5.setPosition(930, 154);
-    tracker6.setPosition(982, 206);
-    tracker7.setPosition(982, 296);
-    tracker8.setPosition(982, 386);
-    tracker9.setPosition(930, 460);
-    tracker10.setPosition(850, 460);
-    tracker11.setPosition(794, 510);
-    tracker12.setPosition(794, 602);
-    tracker13.setPosition(740,659);
-    tracker14.setPosition(650,660);
-    tracker15.setPosition(560,660);
-    tracker16.setPosition(470,660);
-    tracker17.setPosition(380,660);
-    tracker18.setPosition(325,605);
-    tracker19.setPosition(380,552);
-    tracker20.setPosition(470,552);
-    tracker21.setPosition(560,552);
-    tracker22.setPosition(613,500);
-    tracker23.setPosition(613,404);
-    tracker24.setPosition(613,314);
-    tracker25.setPosition(560,261);
-    tracker26.setPosition(470,261);
-    tracker27.setPosition(380,261);
-    tracker28.setPosition(325,208);
-    tracker29.setPosition(470,154);
-    tracker30.setPosition(380,154);
+    //Physical sensors that can feel the car!
+
+    trackerMatter[0] = this.matter.add.rectangle(560, 154, 4, 80, opt);
+    trackerMatter[1] = this.matter.add.rectangle(650, 154, 4, 80, opt);
+    trackerMatter[2] = this.matter.add.rectangle(740, 154, 4, 80, opt);
+    trackerMatter[3] = this.matter.add.rectangle(830, 154, 4, 80, opt);
+    trackerMatter[4] = this.matter.add.rectangle(930, 154, 4, 80, opt);
+    trackerMatter[5] = this.matter.add.rectangle(982, 206, 80, 4, opt);
+    trackerMatter[6] = this.matter.add.rectangle(982, 296, 80, 4, opt);
+    trackerMatter[7] = this.matter.add.rectangle(982, 386, 80, 4, opt);
+    trackerMatter[8] = this.matter.add.rectangle(930, 460, 4, 80, opt);
+    trackerMatter[9] = this.matter.add.rectangle(850, 460, 4, 80, opt);
+    trackerMatter[10] = this.matter.add.rectangle(794, 510, 80, 4, opt);
+    trackerMatter[11] = this.matter.add.rectangle(794, 602, 80, 4, opt);
+    trackerMatter[12] = this.matter.add.rectangle(740, 659, 4, 80, opt);
+    trackerMatter[13] = this.matter.add.rectangle(650, 660, 4, 80, opt);
+    trackerMatter[14] = this.matter.add.rectangle(560, 660, 4, 80, opt);
+    trackerMatter[15] = this.matter.add.rectangle(470, 660, 4, 80, opt);
+    trackerMatter[16] = this.matter.add.rectangle(380, 660, 4, 80, opt);
+    trackerMatter[17] = this.matter.add.rectangle(325, 605, 80, 4, opt);
+    trackerMatter[18] = this.matter.add.rectangle(380, 552, 4, 80, opt);
+    trackerMatter[19] = this.matter.add.rectangle(470, 552, 4, 80, opt);
+    trackerMatter[20] = this.matter.add.rectangle(560, 552, 4, 80, opt);
+    trackerMatter[21] = this.matter.add.rectangle(613, 500, 80, 4, opt);
+    trackerMatter[22] = this.matter.add.rectangle(613, 404, 80, 4, opt);
+    trackerMatter[23] = this.matter.add.rectangle(613, 314, 80, 4, opt);
+    trackerMatter[24] = this.matter.add.rectangle(560, 261, 4, 80, opt);
+    trackerMatter[25] = this.matter.add.rectangle(470, 261, 4, 80, opt);
+    trackerMatter[26] = this.matter.add.rectangle(380, 261, 4, 80, opt);
+    trackerMatter[27] = this.matter.add.rectangle(325, 208, 80, 4, opt);
+    trackerMatter[28] = this.matter.add.rectangle(470, 154, 4, 80, opt);
+    trackerMatter[29] = this.matter.add.rectangle(380, 154, 4, 80, opt);
+    
     //
-
-
-
 
 
     //Collision detection between car and road
@@ -153,7 +165,10 @@ function create ()
         console.log(bodyA.parent.label);
         console.log(bodyB.parent.label);
         if(bodyA.parent.label === "road" || bodyB.parent.label === "road"){
-            nCar.ResetCar(nCar.car.x,nCar.car.y,nCar.car.rotation);
+            nCar.ResetCar();
+        }
+        if(bodyA.parent.label === "tracker" || bodyB.parent.label === "tracker"){
+            nCar.countTracks++;
         }
     });
 
@@ -196,6 +211,7 @@ function renderGrapichs(){
     xText.setText("X: "+ Math.round(nCar.car.x));
     yText.setText("Y: "+ Math.round(nCar.car.y));
     rText.setText(Math.round(nCar.car.rotation*(180/Math.PI)) +"°");
+    rText.setText("Travel: " + nCar.countTracks);
     fpsText.setText("FPS Rend: " + Math.round(game.loop.actualFps));
     fps2Text.setText("FPS Phys: " + Math.round(fps.fps));
 
