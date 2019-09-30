@@ -203,6 +203,8 @@ function physicsRend(currentframe) {
     if(cursors.right.isDown && cursors.up.isDown){
         nCar.Steer(1);
     }
+
+    
 }
 function renderGrapichs(){
     //rendering stuff here

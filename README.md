@@ -9,3 +9,4 @@ Det här arbetet handlar om att med hjälp av inmatningar och använding utav et
 
 
 # Vad lärde jag mig
+
