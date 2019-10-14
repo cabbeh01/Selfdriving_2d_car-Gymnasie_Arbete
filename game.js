@@ -204,6 +204,7 @@ function physicsRend(currentframe) {
         nCar.Steer(1);
     }
 }
+    
 function renderGrapichs(){
     //rendering stuff here
     xText.setText("X: "+ Math.round(nCar.car.x));
