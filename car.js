@@ -11,10 +11,14 @@ class Car {
     startX;
     startY;
     countTracks = 0;
+
+    //Sensor
+    sensor = [3];
+    lenghtsensors = 50;
+
+
     car = new Object;
     
-    
-
     constructor(x,y){
         this.x = x;
         this.startX = x;
