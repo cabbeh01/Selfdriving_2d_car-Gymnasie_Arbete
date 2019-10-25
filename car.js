@@ -20,9 +20,9 @@ class Car {
     car = new Object;
     
     constructor(x,y){
-        this.x = x;
+        this.car.x = x;
         this.startX = x;
-        this.y = y;
+        this.car.y = y;
         this.startY = y;
     }
 
