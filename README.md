@@ -5,7 +5,6 @@ Det här arbetet handlar om att med hjälp av inmatningar och använding utav et
 # Frågeställning
 - Är det möjligt med hjälp av inmatningar, få ut en modell som kan på egen hand ta beslut utifrån dess situation?
 - Har det gömda lagret någon betydelse i inlärningsprocessen?
-- Spelar antalet sensorer på bilen roll?
 
 
 # Vad lärde jag mig
