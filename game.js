@@ -131,6 +131,7 @@ function update (timestamp, elapsed)
     }
     
     renderGrapichs();
+    
 }
 
 
