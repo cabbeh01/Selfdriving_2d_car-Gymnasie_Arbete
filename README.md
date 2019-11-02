@@ -1,4 +1,5 @@
-# Gymnasie arbete - Casper Henningsson
+# Självkörande 2d Bil Gymnasie arbete - Casper Henningsson
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 
 Det här arbetet handlar om att med hjälp av inmatningar och använding utav ett neuralt nätverk kunna göra beslut. I detta fallet kunna göra beslut på hur en 2d bil ska kunna ta sig fram på en väg för att inte kollidera. Till  sin hjälp kommer bilen ha ett visst antal sensorer som känner av avståndet mellan bilen och vägkanten.
 
