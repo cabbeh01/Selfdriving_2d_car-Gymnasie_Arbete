@@ -91,7 +91,7 @@ function create ()
     this.matter.world.on('collisionstart', function (event, bodyA, bodyB) {
         //console.log(bodyA.area + "  " + bodyA.parent.label);
         //console.log(bodyB.area + "  " + bodyB.parent.label);
-        //console.log(event);
+        //console.log(event.separation);
         if(bodyA.parent.label === "road" && bodyB.parent.label === "car"){
             nCar.ResetCar();
 
@@ -99,9 +99,25 @@ function create ()
         if(bodyA.parent.label === "car" && bodyB.parent.label === "tracker"){
             nCar.countTracks++;
         }
+        if(bodyA.parent.label === "road"){
+            for(let i = 0; i<3; i++){
+                if(event.source.pairs.collisionActive[i]){
+                    console.log(event.source.pairs.collisionActive[i].separation);
+                }/*
+                if(event.source.pairs.collisionActive[i].bodyB.label === "Sensor 2"){
+                    console.log(event.source.pairs.collisionActive[i].separation);
+                }
+                if(event.source.pairs.collisionActive[i].bodyB.label === "Sensor 3"){
+                    console.log(event.source.pairs.collisionActive[i].separation);
+                }*/
+            }
+        }
+        
+        
 
-
+//.collision.separation
         if(bodyA.parent.label === "road" && bodyB.parent.label === "Sensor 1"){
+            console.log(event.source.pairs.collisionActive[0]);
             console.log(bodyA.area + "  " + bodyA.parent.label);
             console.log(bodyB.area + "  " + bodyB.parent.label);
         }
