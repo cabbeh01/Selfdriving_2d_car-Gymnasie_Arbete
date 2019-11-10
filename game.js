@@ -2,7 +2,7 @@ let config = {
     type: Phaser.AUTO,
     width: 1400,
     height: 800,
-    parent: 'game',
+    parent: "game",
     backgroundColor: 0x0ecf8f,
     scene: {
         preload: preload,
@@ -10,7 +10,7 @@ let config = {
         update: update
     },
     physics:{
-        default: 'matter',
+        default: "matter",
         matter: {
             gravity: {
                 y: 0
@@ -37,7 +37,7 @@ const opt ={
 }
 const SensorSetting ={
     isSensor: true,
-    type: 'rectangle',
+    type: "rectangle",
     height:2,
     width:nCar.lenghtsensors
 }
@@ -45,24 +45,23 @@ const SensorSetting ={
 
 function preload ()
 {
-    this.load.image("ground", "./Graphics/background2.png");
     //Load graphics
+    this.load.image("ground", "./Graphics/background2.png");
     this.load.image("car", "./Graphics/car.png");
     this.load.image("road", "./Graphics/road.png");
 
     //Load collision shape
-    this.load.json('shapes', './Graphics/shapes.json');
+    this.load.json("shapes", "./Graphics/shapes.json");
     
 }
 
 function create ()
 {
-    let shapes = this.cache.json.get('shapes');
-    this.add.image(700, 400, 'ground');
-    road = this.matter.add.sprite(800, 400, 'road',"road", {shape: shapes.road});
+    let shapes = this.cache.json.get("shapes");
+    this.add.image(700, 400, "ground");
+    road = this.matter.add.sprite(800, 400, "road","road", {shape: shapes.road});
 
-    nCar.car = this.matter.add.sprite(nCar.car.x, nCar.car.y, 'car',"car",{shape: shapes.car});
-    //car = this.matter.add.sprite(nCar.x, nCar.y, 'car',"car",{shape: shapes.car});
+    nCar.car = this.matter.add.sprite(nCar.car.x, nCar.car.y, "car","car",{shape: shapes.car});
 
     sensor1 = this.add.rectangle(0, 0, nCar.lenghtsensors, 2, 0x00ff00);
     sensor2 = this.add.rectangle(0, 0, nCar.lenghtsensors, 2, 0x00ff00);
@@ -82,13 +81,13 @@ function create ()
     nCar.car.setCollisionGroup(-1);
     
     cursors = this.input.keyboard.createCursorKeys();
-    keyD = this.input.keyboard.addKey('D');
+    keyD = this.input.keyboard.addKey("D");
 
     createTextObject(this);
     setPositionOnSensors(this);
 
     //Collision detection between car and road
-    this.matter.world.on('collisionstart', function (event, bodyA, bodyB) {
+    this.matter.world.on("collisionstart", function (event, bodyA, bodyB) {
         //console.log(bodyA.area + "  " + bodyA.parent.label);
         //console.log(bodyB.area + "  " + bodyB.parent.label);
         //console.log(event.separation);
@@ -134,7 +133,7 @@ function create ()
 
     });
 
-    debugMode(this);
+    //debugMode(this);
 }
 
 function update (timestamp, elapsed)
@@ -206,13 +205,13 @@ function renderGrapichs(){
 
 //  **********  Create Text objects  ********** 
 function createTextObject(g){
-    xText = g.add.text(16, 16, 'X: 0', { fontSize: '32px', fill: '#fff' });
-    yText = g.add.text(16, 52, 'Y: 0', { fontSize: '32px', fill: '#fff' });
-    rText = g.add.text(16, 88, '0°', { fontSize: '32px', fill: '#fff' });
-    travelText = g.add.text(16, 88, 'Travel: ', { fontSize: '32px', fill: '#fff' });
+    xText = g.add.text(16, 16, "X: 0", { fontSize: "32px", fill: "#fff" });
+    yText = g.add.text(16, 52, "Y: 0", { fontSize: "32px", fill: "#fff" });
+    rText = g.add.text(16, 88, "0°", { fontSize: "32px", fill: "#fff" });
+    travelText = g.add.text(16, 88, "Travel: ", { fontSize: "32px", fill: "#fff" });
 
-    fpsText = g.add.text(1130, 16, 'FPS: ', { fontSize: '32px', fill: '#fff' });
-    fps2Text = g.add.text(1130, 52, 'FPS: ', { fontSize: '32px', fill: '#fff' });
+    fpsText = g.add.text(1130, 16, "FPS: ", { fontSize: "32px", fill: "#fff" });
+    fps2Text = g.add.text(1130, 52, "FPS: ", { fontSize: "32px", fill: "#fff" });
 }
 
 

@@ -14,3 +14,32 @@ Sen2-     |Hidden Layer|    ---- Output
 Sen3-
 
 */
+
+//Initiling the methods from synaptic
+let Layer = synaptic.Layer;
+let Network = synaptic.Network;
+
+//Creation of the network
+
+
+//let inputLayer = new Layer(3);
+let inputLayer = new Layer(2); // Kanske bara behöver använda mig av två input alltså höger eller vänster då gasen i botten kan köras hela tiden
+let hiddenLayer = new Layer(6);
+let outputLayer = new Layer(3);
+
+
+inputLayer.project(hiddenLayer);
+hiddenLayer.project(outputLayer);
+
+let NeuralNetwork = new Network({
+	input: inputLayer,
+	hidden: [hiddenLayer],
+	output: outputLayer
+});
+
+
+//Training the network
+
+
+
+//Test the network
