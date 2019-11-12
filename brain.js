@@ -27,6 +27,8 @@ let inputLayer = new Layer(2); // Kanske bara behöver använda mig av två inpu
 let hiddenLayer = new Layer(6);
 let outputLayer = new Layer(3);
 
+let fitness = 0;
+
 
 inputLayer.project(hiddenLayer);
 hiddenLayer.project(outputLayer);
@@ -41,5 +43,17 @@ let NeuralNetwork = new Network({
 //Training the network
 
 
+
+function nextGeneration(){
+
+}
+
+function mutation(){
+
+}
+
+function crossover(){
+     
+}
 
 //Test the network
