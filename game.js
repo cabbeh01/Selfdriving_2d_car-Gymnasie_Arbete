@@ -28,6 +28,9 @@ let fps ={
 
 let game = new Phaser.Game(config);
 let nCar = new Car(500,153,this);
+let Nsens1 = 0;
+let Nsens2 = 0;
+let Nsens3 = 0;
 
 const COLORLINE = 0x00ffff;
 
@@ -91,6 +94,10 @@ function create ()
         //console.log(bodyA.area + "  " + bodyA.parent.label);
         //console.log(bodyB.area + "  " + bodyB.parent.label);
         //console.log(event.separation);
+
+        Nsens1 = 0;
+        Nsens2 = 0;
+        Nsens3 = 0;
         if(bodyA.parent.label === "road" && bodyB.parent.label === "car"){
             nCar.ResetCar();
 
@@ -116,17 +123,20 @@ function create ()
 
 //.collision.separation
         if(bodyA.parent.label === "road" && bodyB.parent.label === "Sensor 1"){
+            Nsens1 = 1;
             console.log(event.source.pairs.collisionActive[0]);
             console.log(bodyA.area + "  " + bodyA.parent.label);
             console.log(bodyB.area + "  " + bodyB.parent.label);
         }
 
         if(bodyA.parent.label === "road" && bodyB.parent.label === "Sensor 2"){
+            Nsens2 = 1;
             console.log(bodyA.area + "  " + bodyA.parent.label);
             console.log(bodyB.area + "  " + bodyB.parent.label);
         }
 
         if(bodyA.parent.label === "road" && bodyB.parent.label === "Sensor 3"){
+            Nsens3 = 1;
             console.log(bodyA.area + "  " + bodyA.parent.label);
             console.log(bodyB.area + "  " + bodyB.parent.label);
         }
@@ -178,6 +188,12 @@ function renderGrapichs(){
     fpsText.setText("FPS Rend: " + Math.round(game.loop.actualFps));
     fps2Text.setText("FPS Phys: " + Math.round(fps.fps));
 
+     //Neural network
+
+     sens1.setText("Sens 1: " + Nsens1);
+     sens2.setText("Sens 2: " + Nsens2);
+     sens3.setText("Sens 3: " + Nsens3);
+
     //nCar.sensor[0].position = {x:nCar.car.x + Math.cos(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2,y:nCar.car.y + Math.sin(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2};
     //sensor[0].position.x = nCar.car.x + Math.cos(nCar.car.rotation + Math.PI/4)*lenghtsensors/2;
     //sensor[0].position.y = nCar.car.y + Math.sin(nCar.car.rotation + Math.PI/4)*lenghtsensors/2;
@@ -201,6 +217,10 @@ function renderGrapichs(){
     nCar.sensor[2].setPosition(nCar.car.x + Math.cos(nCar.car.rotation)*nCar.lenghtsensors/2, nCar.car.y + Math.sin(nCar.car.rotation)*nCar.lenghtsensors/2);
     sensor3.setPosition(nCar.car.x + Math.cos(nCar.car.rotation)*nCar.lenghtsensors/2, nCar.car.y + Math.sin(nCar.car.rotation)*nCar.lenghtsensors/2);
     sensor3.setRotation(nCar.car.rotation);
+
+
+
+   
 }
 
 //  **********  Create Text objects  ********** 
@@ -212,6 +232,16 @@ function createTextObject(g){
 
     fpsText = g.add.text(1130, 16, "FPS: ", { fontSize: "32px", fill: "#fff" });
     fps2Text = g.add.text(1130, 52, "FPS: ", { fontSize: "32px", fill: "#fff" });
+
+
+    //Text neural network
+
+    sens1 = g.add.text(16, 160, "Sen1: 0", { fontSize: "32px", fill: "#fff" });
+    sens2 = g.add.text(16, 196, "Sen2: 0", { fontSize: "32px", fill: "#fff" });
+    sens3 = g.add.text(16, 232, "Sen3: 0", { fontSize: "32px", fill: "#fff" });
+
+
+    Output = g.add.text(16, 268, "Out: 0.90990", { fontSize: "32px", fill: "#fff" });
 }
 
 
