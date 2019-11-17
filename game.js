@@ -17,7 +17,17 @@ let config = {
             }
             //debug: true
         }
-    }
+    },
+
+    plugins: {
+        scene: [
+          {
+            plugin: PhaserMatterCollisionPlugin, // The plugin class
+            key: "matterCollision", // Where to store in Scene.Systems, e.g. scene.sys.matterCollision
+            mapping: "matterCollision" // Where to store in the Scene, e.g. scene.matterCollision
+          }
+        ]
+      }
 }
 
 let fps ={
@@ -90,7 +100,7 @@ function create ()
     setPositionOnSensors(this);
 
     //Collision detection between car and road
-    this.matter.world.on("collisionstart", function (event, bodyA, bodyB) {
+    /*this.matter.world.on("collisionstart", function (event, bodyA, bodyB) {
         //console.log(bodyA.area + "  " + bodyA.parent.label);
         //console.log(bodyB.area + "  " + bodyB.parent.label);
         //console.log(event.separation);
@@ -100,7 +110,6 @@ function create ()
         Nsens3 = 0;
         if(bodyA.parent.label === "road" && bodyB.parent.label === "car"){
             nCar.ResetCar();
-
         }
         if(bodyA.parent.label === "car" && bodyB.parent.label === "tracker"){
             nCar.countTracks++;
@@ -109,19 +118,19 @@ function create ()
             for(let i = 0; i<3; i++){
                 if(event.source.pairs.collisionActive[i]){
                     console.log(event.source.pairs.collisionActive[i].separation);
-                }/*
+                }
                 if(event.source.pairs.collisionActive[i].bodyB.label === "Sensor 2"){
                     console.log(event.source.pairs.collisionActive[i].separation);
                 }
                 if(event.source.pairs.collisionActive[i].bodyB.label === "Sensor 3"){
                     console.log(event.source.pairs.collisionActive[i].separation);
-                }*/
+                }
             }
         }
         
         
 
-//.collision.separation
+//  .collision.separation
         if(bodyA.parent.label === "road" && bodyB.parent.label === "Sensor 1"){
             Nsens1 = 1;
             console.log(event.source.pairs.collisionActive[0]);
@@ -141,6 +150,57 @@ function create ()
             console.log(bodyB.area + "  " + bodyB.parent.label);
         }
 
+    });*/
+
+
+    this.matterCollision.addOnCollideStart({
+        objectA: nCar.car,
+        objectB: road,
+        callback: eventData => {
+            nCar.ResetCar();
+        }
+      });
+
+    this.matterCollision.addOnCollideStart({
+        objectA: nCar.car,
+        objectB: trackerMatter,
+        callback: eventData => {
+            nCar.countTracks++;
+        }
+    });
+
+    this.matterCollision.addOnCollideStart({
+        objectA: nCar.sensor,
+        objectB: road,
+        callback: eventData => {
+            if(eventData.gameObjectA.body.label === "Sensor 1"){
+                Nsens1 = 1;
+            }
+            if(eventData.gameObjectA.body.label === "Sensor 2"){
+                Nsens2 = 1;
+            }
+            if(eventData.gameObjectA.body.label === "Sensor 3"){
+                Nsens3 = 1;
+            }
+            nCar.countTracks++;
+        }
+    });
+    
+    this.matterCollision.addOnCollideEnd({
+        objectA: nCar.sensor,
+        objectB: road,
+        callback: eventData => {
+            if(eventData.gameObjectA.body.label === "Sensor 1"){
+                Nsens1 = 0;
+            }
+            if(eventData.gameObjectA.body.label === "Sensor 2"){
+                Nsens2 = 0;
+            }
+            if(eventData.gameObjectA.body.label === "Sensor 3"){
+                Nsens3 = 0;
+            }
+            nCar.countTracks++;
+        }
     });
 
     //debugMode(this);
