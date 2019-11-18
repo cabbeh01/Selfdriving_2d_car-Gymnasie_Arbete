@@ -46,6 +46,7 @@ let NeuralNetwork = new Network({
 
 
 
+
 function nextGeneration(){
 
 }
@@ -58,4 +59,20 @@ function crossover(){
      
 }
 
+
+
+function GuessWord(lenght){
+    let word = "";
+    for(let i = 0; i<lenght;i++){
+        n = Math.floor(Math.random()*125);
+        while(!(n > 96 && n < 123)){
+            n = Math.floor(Math.random()*125);
+        }
+        
+        a = String.fromCharCode(n);
+
+        word += a;
+    }
+    console.log(word);
+}
 //Test the network
