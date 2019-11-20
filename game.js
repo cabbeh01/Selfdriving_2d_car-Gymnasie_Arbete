@@ -99,58 +99,7 @@ function create ()
     createTextObject(this);
     setPositionOnSensors(this);
 
-    //Collision detection between car and road
-    /*this.matter.world.on("collisionstart", function (event, bodyA, bodyB) {
-        //console.log(bodyA.area + "  " + bodyA.parent.label);
-        //console.log(bodyB.area + "  " + bodyB.parent.label);
-        //console.log(event.separation);
-
-        Nsens1 = 0;
-        Nsens2 = 0;
-        Nsens3 = 0;
-        if(bodyA.parent.label === "road" && bodyB.parent.label === "car"){
-            nCar.ResetCar();
-        }
-        if(bodyA.parent.label === "car" && bodyB.parent.label === "tracker"){
-            nCar.countTracks++;
-        }
-        if(bodyA.parent.label === "road"){
-            for(let i = 0; i<3; i++){
-                if(event.source.pairs.collisionActive[i]){
-                    console.log(event.source.pairs.collisionActive[i].separation);
-                }
-                if(event.source.pairs.collisionActive[i].bodyB.label === "Sensor 2"){
-                    console.log(event.source.pairs.collisionActive[i].separation);
-                }
-                if(event.source.pairs.collisionActive[i].bodyB.label === "Sensor 3"){
-                    console.log(event.source.pairs.collisionActive[i].separation);
-                }
-            }
-        }
-        
-        
-
-//  .collision.separation
-        if(bodyA.parent.label === "road" && bodyB.parent.label === "Sensor 1"){
-            Nsens1 = 1;
-            console.log(event.source.pairs.collisionActive[0]);
-            console.log(bodyA.area + "  " + bodyA.parent.label);
-            console.log(bodyB.area + "  " + bodyB.parent.label);
-        }
-
-        if(bodyA.parent.label === "road" && bodyB.parent.label === "Sensor 2"){
-            Nsens2 = 1;
-            console.log(bodyA.area + "  " + bodyA.parent.label);
-            console.log(bodyB.area + "  " + bodyB.parent.label);
-        }
-
-        if(bodyA.parent.label === "road" && bodyB.parent.label === "Sensor 3"){
-            Nsens3 = 1;
-            console.log(bodyA.area + "  " + bodyA.parent.label);
-            console.log(bodyB.area + "  " + bodyB.parent.label);
-        }
-
-    });*/
+    
 
 
     this.matterCollision.addOnCollideStart({
@@ -248,11 +197,14 @@ function renderGrapichs(){
     fpsText.setText("FPS Rend: " + Math.round(game.loop.actualFps));
     fps2Text.setText("FPS Phys: " + Math.round(fps.fps));
 
-     //Neural network
+    //Neural network
 
-     sens1.setText("Sens 1: " + Nsens1);
-     sens2.setText("Sens 2: " + Nsens2);
-     sens3.setText("Sens 3: " + Nsens3);
+    sens1.setText("Sens 1: " + Nsens1);
+    sens2.setText("Sens 2: " + Nsens2);
+    sens3.setText("Sens 3: " + Nsens3);
+
+    velocityX.setText("VelocityX: " + Math.round(nCar.velocityX));
+    velocityY.setText("VelocityY: " + Math.round(nCar.velocityY));
 
     //nCar.sensor[0].position = {x:nCar.car.x + Math.cos(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2,y:nCar.car.y + Math.sin(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2};
     //sensor[0].position.x = nCar.car.x + Math.cos(nCar.car.rotation + Math.PI/4)*lenghtsensors/2;
@@ -299,6 +251,11 @@ function createTextObject(g){
     sens1 = g.add.text(16, 160, "Sen1: 0", { fontSize: "32px", fill: "#fff" });
     sens2 = g.add.text(16, 196, "Sen2: 0", { fontSize: "32px", fill: "#fff" });
     sens3 = g.add.text(16, 232, "Sen3: 0", { fontSize: "32px", fill: "#fff" });
+
+    velocityX = g.add.text(16, 338, "Velocity: 0", { fontSize: "32px", fill: "#fff" });
+    velocityY = g.add.text(16, 372, "Velocity: 0", { fontSize: "32px", fill: "#fff" });
+    //nCar.velocityX
+    //nCar.velocityY
 
 
     Output = g.add.text(16, 268, "Out: 0.90990", { fontSize: "32px", fill: "#fff" });
@@ -399,3 +356,59 @@ function setPositionOnSensors(g){
     trackerMatter[29] = g.matter.add.rectangle(380, 154, 4, 80, opt);
 
 }
+
+
+
+
+//Collision detection between car and road
+    /*this.matter.world.on("collisionstart", function (event, bodyA, bodyB) {
+        //console.log(bodyA.area + "  " + bodyA.parent.label);
+        //console.log(bodyB.area + "  " + bodyB.parent.label);
+        //console.log(event.separation);
+
+        Nsens1 = 0;
+        Nsens2 = 0;
+        Nsens3 = 0;
+        if(bodyA.parent.label === "road" && bodyB.parent.label === "car"){
+            nCar.ResetCar();
+        }
+        if(bodyA.parent.label === "car" && bodyB.parent.label === "tracker"){
+            nCar.countTracks++;
+        }
+        if(bodyA.parent.label === "road"){
+            for(let i = 0; i<3; i++){
+                if(event.source.pairs.collisionActive[i]){
+                    console.log(event.source.pairs.collisionActive[i].separation);
+                }
+                if(event.source.pairs.collisionActive[i].bodyB.label === "Sensor 2"){
+                    console.log(event.source.pairs.collisionActive[i].separation);
+                }
+                if(event.source.pairs.collisionActive[i].bodyB.label === "Sensor 3"){
+                    console.log(event.source.pairs.collisionActive[i].separation);
+                }
+            }
+        }
+        
+        
+
+//  .collision.separation
+        if(bodyA.parent.label === "road" && bodyB.parent.label === "Sensor 1"){
+            Nsens1 = 1;
+            console.log(event.source.pairs.collisionActive[0]);
+            console.log(bodyA.area + "  " + bodyA.parent.label);
+            console.log(bodyB.area + "  " + bodyB.parent.label);
+        }
+
+        if(bodyA.parent.label === "road" && bodyB.parent.label === "Sensor 2"){
+            Nsens2 = 1;
+            console.log(bodyA.area + "  " + bodyA.parent.label);
+            console.log(bodyB.area + "  " + bodyB.parent.label);
+        }
+
+        if(bodyA.parent.label === "road" && bodyB.parent.label === "Sensor 3"){
+            Nsens3 = 1;
+            console.log(bodyA.area + "  " + bodyA.parent.label);
+            console.log(bodyB.area + "  " + bodyB.parent.label);
+        }
+
+    });*/

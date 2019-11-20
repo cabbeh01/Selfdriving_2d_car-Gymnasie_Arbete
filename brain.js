@@ -39,13 +39,18 @@ let NeuralNetwork = new Network({
 	output: outputLayer
 });
 
-
+//Link to the car module
+let carNN = nCar;
 
 
 //Training the network
 
 
-
+function train(){
+    for(let i = 0; i<1000;i++){
+        carNN.MoveForward();
+    }
+}
 
 function nextGeneration(){
 
