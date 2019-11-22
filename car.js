@@ -7,6 +7,8 @@ class Car {
     angularDrag = 0.1;
     power = 0.35;
     turnspeed = .07;
+    maxVelocity = 4;
+    minVelocity = -4;
 
     startX;
     startY;
@@ -45,8 +47,10 @@ class Car {
     }
 
     MoveForward(){
-        this.velocityX += Math.cos(this.car.rotation) * this.power;
-        this.velocityY += Math.sin(this.car.rotation) * this.power;
+        if(this.velocityX < this.maxVelocity && this.velocityY < this.maxVelocity && this.velocityX > this.minVelocity && this.velocityY > this.minVelocity){
+            this.velocityX += Math.cos(this.car.rotation) * this.power;
+            this.velocityY += Math.sin(this.car.rotation) * this.power;
+        }
     }
 
     ResetCar(){
