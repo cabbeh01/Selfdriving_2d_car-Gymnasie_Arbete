@@ -38,6 +38,7 @@ let fps ={
 
 let game = new Phaser.Game(config);
 let nCar = new Car(500,153,this);
+
 let Nsens1 = 0;
 let Nsens2 = 0;
 let Nsens3 = 0;
@@ -254,6 +255,8 @@ function renderGrapichs(){
      sens2.setText("Sens 2: " + Nsens2);
      sens3.setText("Sens 3: " + Nsens3);
 
+    output.setText("Output: " + activate([Nsens1,Nsens2,Nsens3]));
+
     //nCar.sensor[0].position = {x:nCar.car.x + Math.cos(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2,y:nCar.car.y + Math.sin(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2};
     //sensor[0].position.x = nCar.car.x + Math.cos(nCar.car.rotation + Math.PI/4)*lenghtsensors/2;
     //sensor[0].position.y = nCar.car.y + Math.sin(nCar.car.rotation + Math.PI/4)*lenghtsensors/2;
@@ -301,7 +304,7 @@ function createTextObject(g){
     sens3 = g.add.text(16, 232, "Sen3: 0", { fontSize: "32px", fill: "#fff" });
 
 
-    Output = g.add.text(16, 268, "Out: 0.90990", { fontSize: "32px", fill: "#fff" });
+    output = g.add.text(16, 268, "Out: 0.90990", { fontSize: "32px", fill: "#fff" });
 }
 
 
