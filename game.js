@@ -255,8 +255,8 @@ function createTextObject(g){
     sens2 = g.add.text(16, 196, "Sen2: 0", { fontSize: "32px", fill: "#fff" });
     sens3 = g.add.text(16, 232, "Sen3: 0", { fontSize: "32px", fill: "#fff" });
 
-    velocityX = g.add.text(16, 338, "Velocity: 0", { fontSize: "32px", fill: "#fff" });
-    velocityY = g.add.text(16, 372, "Velocity: 0", { fontSize: "32px", fill: "#fff" });
+    velocityX = g.add.text(16, 338, "VelocityX: 0", { fontSize: "32px", fill: "#fff" });
+    velocityY = g.add.text(16, 372, "VelocityY: 0", { fontSize: "32px", fill: "#fff" });
     //nCar.velocityX
     //nCar.velocityY
 
