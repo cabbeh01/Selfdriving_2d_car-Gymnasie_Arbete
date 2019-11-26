@@ -98,8 +98,36 @@ function sample(array){
 	return array[Math.floor(Math.random()*array.length)];
 }
 
-function mutation(){
 
+function keepBestGenomes(maximize=false){
+	// sort genomes on fitness
+	genomes.sort(function(a, b){ return a['fitness'] - b['fitness'] });
+	if (maximize) genomes.reverse(); // allows for fitness to be maximized 
+	console.log(genomes);
+	
+	while (genomes.length > nBest) // remove worst genomes
+		genomes.pop();
+}
+
+
+function mutate(net){
+	// mutate neurons
+	var neurons = net.neurons;
+	for (var i = 0; i < neurons.length; i++){  
+		// adjust the bias multiplying a random number in the random -2:2
+		if (Math.random() < mutationProbability)
+			neurons[i]['bias'] += neurons[i]['bias'] * (Math.random() - 0.5) * 3 + (Math.random() - 0.5);
+	}
+
+	// mutate connections
+	var connections = net.connections;
+	for (var i = 0; i < connections.length; i++){ 
+		// adjust the weight multiplying a random number in the random -2:2
+		if (Math.random() < mutationProbability)
+			connections[i]['weight'] += connections[i]['weight'] * (Math.random() - 0.5) * 3 + (Math.random() - 0.5);
+	}
+
+	return net;
 }
 
 function crossover(){

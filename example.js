@@ -1,4 +1,4 @@
-/// This code is used as a learning code to complete my neural network
+/// This code is used as a learning example to finish my neural network
 
 var Architect = synaptic.Architect;
 var Network = synaptic.Network;
