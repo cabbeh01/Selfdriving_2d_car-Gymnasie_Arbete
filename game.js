@@ -186,7 +186,8 @@ function physicsRend(currentframe) {
         nCar.Steer(1);
     }
 
-
+    //nCar.MoveForward();
+    
 }
     
 function renderGrapichs(){

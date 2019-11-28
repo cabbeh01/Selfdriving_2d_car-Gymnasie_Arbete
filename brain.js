@@ -37,7 +37,7 @@ let generation = 0;
 let genomes = [];
 
 while (genomes.length < populationSize) {
-    // population genomes with random perceptron networks
+    // Population genomes with random perceptron networks
     genomes.push( new Architect.Perceptron(inputLayer, hiddenLayer, hiddenLayer, outputLayer) );
 }
 
@@ -53,41 +53,41 @@ function activate(data){
 }
 
 function advanceGenome(fitness){
-	genomes[genome].fitness = fitness; // assign fitness to the current genome 
-	genome++; // advance genome
+	genomes[genome].fitness = fitness; // Assign fitness to the current genome 
+	genome++; // Advance genome
 	if (genome > genomes.length-1){
-		console.log("advancing generation");
+		console.log("Advancing generation");
 		createNextGeneration();
 	}
 }
 
 
 function createNextGeneration(){
-	generation++; // advance generation
-	genome = 0; // reset current genome
+	generation++; // Advance generation
+	genome = 0; // Reset current genome
 
 	console.log(genomes);
-	keepBestGenomes(); // kill worst genomes and copy the best for crossover
-	var bestGenomes = JSON.parse(JSON.stringify(genomes)); // deep copy
+	keepBestGenomes(); // Kill worst genomes and copy the best for crossover
+	var bestGenomes = JSON.parse(JSON.stringify(genomes)); // Deep copy
 
-	// peform the crossover and mutation by selecting two random genomes
-	// from the bestGenomes and add the new genome to the generation
-	// until there are popSize - 2 remaining
-	while (genomes.length < popSize - 2){
-		// select two random genomes
+	// Peform the crossover and mutation by selecting two random genomes
+	// From the bestGenomes and add the new genome to the generation
+	// Until there are populationSize - 2 remaining
+	while (genomes.length < populationSize - 2){
+		// Select two random genomes
 		var genome1 = sample(bestGenomes);
 		var genome2 = sample(bestGenomes);
 		 
-		// cross over the two randomly selected genomes
+		// Cross over the two randomly selected genomes
 		var crossOver = crossOver(genome1, genome2);
-		// mutate using the new genome created from the crossover
+		// Mutate using the new genome created from the crossover
 		var mutatedGenome = mutate(crossOver);
-		// add to next generation
+		// Add to next generation
 		genomes.push(Network.fromJSON(mutatedGenome)); 
 	}
 
 	// perform just the mutation for the remaining two genomes 
-	while (genomes.length < popSize){
+	while (genomes.length < populationSize){
 		var genome = sample(bestGenomes); // get random genome
 		genomes.push( Network.fromJSON(mutate(genome))); // mutate and add to next generation
 	}
