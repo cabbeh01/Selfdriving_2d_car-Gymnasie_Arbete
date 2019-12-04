@@ -130,12 +130,42 @@ function mutate(net){
 	return net;
 }
 
-function crossover(){
-     
+function crossOver(net1, net2){
+	if (Math.random() > 0.5){ //Swap probability
+		var temp = net1;
+		net1 = net2;
+		net2 = temp;
+	}
+	
+	//Deep clone the neurons of both nets to avoid changing the originals
+	var net1Copy = JSON.parse(JSON.stringify(net1));
+	var net2Copy = JSON.parse(JSON.stringify(net2));
+	var net1Neurons = net1Copy.neurons;
+	var net2Neurons = net2Copy.neurons;
+
+	//Select a random number of neurons to perform a cross over of networks neurons
+	var slicePoint = Math.round(net1Neurons.length * Math.random());
+	for (var i=slicePoint; i<net1Neurons; i++){
+		//Swap bias values
+		var temp = net1Neurons[i]['bias'];
+		net1Neurons[i]['bias'] = net2Neurons[i]['bias'];
+		net2Neurons[i]['bias'] = temp;
+	}
+
+	return net1Copy; 
 }
 
 
 
+
+
+
+
+
+
+
+
+////////////////
 function GuessWord(lenght){
     let word = "";
     for(let i = 0; i<lenght;i++){
