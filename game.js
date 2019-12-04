@@ -132,7 +132,7 @@ function create ()
             if(eventData.gameObjectA.body.label === "Sensor 3"){
                 Nsens3 = 1;
             }
-            nCar.countTracks++;
+            
         }
     });
     
@@ -149,7 +149,7 @@ function create ()
             if(eventData.gameObjectA.body.label === "Sensor 3"){
                 Nsens3 = 0;
             }
-            nCar.countTracks++;
+            //nCar.countTracks++;
         }
     });
 
@@ -185,8 +185,17 @@ function physicsRend(currentframe) {
     if(cursors.right.isDown && cursors.up.isDown){
         nCar.Steer(1);
     }
-
-    //nCar.MoveForward();
+    let out = activate([Nsens1,Nsens2,Nsens3]);
+    console.log([Nsens1,Nsens2,Nsens3]);
+    if(out > 0.5){
+        nCar.Steer(-1);
+        nCar.MoveForward();
+    }
+    else if(out < 0.5){
+        nCar.Steer(1);
+        nCar.MoveForward();
+    }
+    nCar.MoveForward();
     
 }
     

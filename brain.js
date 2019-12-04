@@ -79,9 +79,9 @@ function createNextGeneration(){
 		var genome2 = sample(bestGenomes);
 		 
 		// Cross over the two randomly selected genomes
-		var crossOver = crossOver(genome1, genome2);
+		var crossOvered = crossOver(genome1, genome2);
 		// Mutate using the new genome created from the crossover
-		var mutatedGenome = mutate(crossOver);
+		var mutatedGenome = mutate(crossOvered);
 		// Add to next generation
 		genomes.push(Network.fromJSON(mutatedGenome)); 
 	}
