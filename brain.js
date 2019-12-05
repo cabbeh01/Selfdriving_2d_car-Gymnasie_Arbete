@@ -61,43 +61,37 @@ function advanceGenome(fitness){
 	}
 }
 
-
 function createNextGeneration(){
-	generation++; // Advance generation
-	genome = 0; // Reset current genome
+	generation++; //Advance generation
+	genome = 0; //Reset current genome
 
 	console.log(genomes);
-	keepBestGenomes(); // Kill worst genomes and copy the best for crossover
-	var bestGenomes = JSON.parse(JSON.stringify(genomes)); // Deep copy
+	keepBestGenomes(); //Kill worst genomes and copy the best for crossover
+	let bestGenomes = JSON.parse(JSON.stringify(genomes)); // Deep copy
 
-	// Peform the crossover and mutation by selecting two random genomes
-	// From the bestGenomes and add the new genome to the generation
-	// Until there are populationSize - 2 remaining
+	//Peform the crossover and mutation by selecting two random genomes
+	//From the bestGenomes and add the new genome to the generation
+	//Until there are populationSize - 2 remaining
 	while (genomes.length < populationSize - 2){
-		// Select two random genomes
-		var genome1 = sample(bestGenomes);
-		var genome2 = sample(bestGenomes);
+		//Select two random genomes
+		let genome1 = sample(bestGenomes);
+		let genome2 = sample(bestGenomes);
 		 
-		// Cross over the two randomly selected genomes
-		var crossOvered = crossOver(genome1, genome2);
-		// Mutate using the new genome created from the crossover
-		var mutatedGenome = mutate(crossOvered);
-		// Add to next generation
+		//Cross over the two randomly selected genomes
+		let cO = crossOver(genome1, genome2);
+		console.log(cO);
+		//Mutate using the new genome created from the crossover
+		let mutatedGenome = mutate(cO);
+		//Add to next generation
 		genomes.push(Network.fromJSON(mutatedGenome)); 
 	}
 
-	// perform just the mutation for the remaining two genomes 
+	//Perform just the mutation for the remaining two genomes 
 	while (genomes.length < populationSize){
-		var genome = sample(bestGenomes); // get random genome
-		genomes.push( Network.fromJSON(mutate(genome))); // mutate and add to next generation
+		let genome = sample(bestGenomes); //Get random genome
+		genomes.push( Network.fromJSON(mutate(genome))); //Mutate and add to next generation
 	}
 }
-
-
-function sample(array){
-	return array[Math.floor(Math.random()*array.length)];
-}
-
 
 function keepBestGenomes(maximize=false){
 	// sort genomes on fitness
@@ -109,19 +103,22 @@ function keepBestGenomes(maximize=false){
 		genomes.pop();
 }
 
+function sample(array){
+	return array[Math.floor(Math.random()*array.length)];
+}
 
 function mutate(net){
 	// mutate neurons
-	var neurons = net.neurons;
-	for (var i = 0; i < neurons.length; i++){  
+	let neurons = net.neurons;
+	for (let i = 0; i < neurons.length; i++){  
 		// adjust the bias multiplying a random number in the random -2:2
 		if (Math.random() < mutationProbability)
 			neurons[i]['bias'] += neurons[i]['bias'] * (Math.random() - 0.5) * 3 + (Math.random() - 0.5);
 	}
 
 	// mutate connections
-	var connections = net.connections;
-	for (var i = 0; i < connections.length; i++){ 
+	let connections = net.connections;
+	for (let i = 0; i < connections.length; i++){ 
 		// adjust the weight multiplying a random number in the random -2:2
 		if (Math.random() < mutationProbability)
 			connections[i]['weight'] += connections[i]['weight'] * (Math.random() - 0.5) * 3 + (Math.random() - 0.5);
@@ -132,30 +129,28 @@ function mutate(net){
 
 function crossOver(net1, net2){
 	if (Math.random() > 0.5){ //Swap probability
-		var temp = net1;
+		let temp = net1;
 		net1 = net2;
 		net2 = temp;
 	}
 	
 	//Deep clone the neurons of both nets to avoid changing the originals
-	var net1Copy = JSON.parse(JSON.stringify(net1));
-	var net2Copy = JSON.parse(JSON.stringify(net2));
-	var net1Neurons = net1Copy.neurons;
-	var net2Neurons = net2Copy.neurons;
+	let net1Copy = JSON.parse(JSON.stringify(net1));
+	let net2Copy = JSON.parse(JSON.stringify(net2));
+	let net1Neurons = net1Copy.neurons;
+	let net2Neurons = net2Copy.neurons;
 
 	//Select a random number of neurons to perform a cross over of networks neurons
-	var slicePoint = Math.round(net1Neurons.length * Math.random());
-	for (var i=slicePoint; i<net1Neurons; i++){
+	let slicePoint = Math.round(net1Neurons.length * Math.random());
+	for (let i=slicePoint; i<net1Neurons; i++){
 		//Swap bias values
-		var temp = net1Neurons[i]['bias'];
+		let temp = net1Neurons[i]['bias'];
 		net1Neurons[i]['bias'] = net2Neurons[i]['bias'];
 		net2Neurons[i]['bias'] = temp;
 	}
 
 	return net1Copy; 
 }
-
-
 
 
 

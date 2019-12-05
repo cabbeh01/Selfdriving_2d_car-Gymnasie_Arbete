@@ -1,3 +1,4 @@
+
 let config = {
     type: Phaser.AUTO,
     width: 1400,
@@ -42,6 +43,7 @@ let nCar = new Car(500,153,this);
 let Nsens1 = 0;
 let Nsens2 = 0;
 let Nsens3 = 0;
+
 
 const COLORLINE = 0x00ffff;
 
@@ -101,7 +103,7 @@ function create ()
     setPositionOnSensors(this);
 
     
-
+    startTimer();
 
     this.matterCollision.addOnCollideStart({
         objectA: nCar.car,
@@ -185,13 +187,13 @@ function physicsRend(currentframe) {
     if(cursors.right.isDown && cursors.up.isDown){
         nCar.Steer(1);
     }
-    let out = activate([Nsens1,Nsens2,Nsens3]);
-    console.log([Nsens1,Nsens2,Nsens3]);
-    if(out > 0.5){
+
+    //console.log([Nsens1,Nsens2,Nsens3]);
+    if(activate([Nsens1,Nsens2,Nsens3]) > 0.5){
         nCar.Steer(-1);
         nCar.MoveForward();
     }
-    else if(out < 0.5){
+    else if(activate([Nsens1,Nsens2,Nsens3]) < 0.5){
         nCar.Steer(1);
         nCar.MoveForward();
     }
@@ -207,6 +209,8 @@ function renderGrapichs(){
     rText.setText("Travel: " + nCar.countTracks);
     fpsText.setText("FPS Rend: " + Math.round(game.loop.actualFps));
     fps2Text.setText("FPS Phys: " + Math.round(fps.fps));
+
+    stopwatch.setText("Time: " +s+"s "+ ms+"hs", { fontSize: "32px", fill: "#fff" });
 
     //Neural network
 
@@ -257,6 +261,8 @@ function createTextObject(g){
 
     fpsText = g.add.text(1130, 16, "FPS: ", { fontSize: "32px", fill: "#fff" });
     fps2Text = g.add.text(1130, 52, "FPS: ", { fontSize: "32px", fill: "#fff" });
+
+    stopwatch = g.add.text(1130, 122, "Stopwatch: ", { fontSize: "32px", fill: "#fff" });
 
 
     //Text neural network

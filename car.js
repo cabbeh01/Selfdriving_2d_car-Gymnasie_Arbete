@@ -60,7 +60,8 @@ class Car {
         this.velocityX = 0;
         this.velocityY = 0;
         this.countTracks = 0;
-        advanceGenome(0.3);
+        advanceGenome(stopTimer(), this.countTracks);
+        startTimer();
     }
     //Höger är 1 och vänster -1
     Steer(a){
