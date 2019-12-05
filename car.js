@@ -1,3 +1,5 @@
+//This is the car class and it handles all the values of the car
+
 class Car {
     
     velocityX=0;
@@ -63,7 +65,8 @@ class Car {
         advanceGenome(stopTimer(), this.countTracks);
         startTimer();
     }
-    //Höger är 1 och vänster -1
+
+    //Right is 1 and Left is -1
     Steer(a){
         if(a === -1){
             this.angularVelocity -= this.turnspeed;

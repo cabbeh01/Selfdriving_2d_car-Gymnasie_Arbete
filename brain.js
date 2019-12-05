@@ -37,7 +37,7 @@ let generation = 0;
 let genomes = [];
 
 while (genomes.length < populationSize) {
-    // Population genomes with random perceptron networks
+    //Population genomes with random perceptron networks
     genomes.push( new Architect.Perceptron(inputLayer, hiddenLayer, hiddenLayer, outputLayer) );
 }
 
@@ -53,8 +53,8 @@ function activate(data){
 }
 
 function advanceGenome(fitness){
-	genomes[genome].fitness = fitness; // Assign fitness to the current genome 
-	genome++; // Advance genome
+	genomes[genome].fitness = fitness; //Assign fitness to the current genome 
+	genome++; //Advance genome
 	if (genome > genomes.length-1){
 		console.log("Advancing generation");
 		createNextGeneration();
@@ -94,12 +94,12 @@ function createNextGeneration(){
 }
 
 function keepBestGenomes(maximize=false){
-	// sort genomes on fitness
-	genomes.sort(function(a, b){ return a['fitness'] - b['fitness'] });
-	if (maximize) genomes.reverse(); // allows for fitness to be maximized 
+	//Sort genomes on fitness
+	genomes.sort(function(a, b){ return a["fitness"] - b["fitness"] });
+	if (maximize) genomes.reverse(); //Allows for fitness to be maximized 
 	console.log(genomes);
 	
-	while (genomes.length > nBest) // remove worst genomes
+	while (genomes.length > nBest) //Remove worst genomes
 		genomes.pop();
 }
 
@@ -107,49 +107,49 @@ function sample(array){
 	return array[Math.floor(Math.random()*array.length)];
 }
 
-function mutate(net){
-	// mutate neurons
-	let neurons = net.neurons;
+function mutate(n){
+	//Mutate neurons
+	let neurons = n.neurons;
 	for (let i = 0; i < neurons.length; i++){  
-		// adjust the bias multiplying a random number in the random -2:2
+		//Adjust the bias multiplying a random number in the random -2:2
 		if (Math.random() < mutationProbability)
-			neurons[i]['bias'] += neurons[i]['bias'] * (Math.random() - 0.5) * 3 + (Math.random() - 0.5);
+			neurons[i]["bias"] += neurons[i]["bias"] * (Math.random() - 0.5) * 3 + (Math.random() - 0.5);
 	}
 
-	// mutate connections
-	let connections = net.connections;
+	//Mutate connections
+	let connections = n.connections;
 	for (let i = 0; i < connections.length; i++){ 
-		// adjust the weight multiplying a random number in the random -2:2
+		//Adjust the weight multiplying a random number in the random -2:2
 		if (Math.random() < mutationProbability)
-			connections[i]['weight'] += connections[i]['weight'] * (Math.random() - 0.5) * 3 + (Math.random() - 0.5);
+			connections[i]["weight"] += connections[i]["weight"] * (Math.random() - 0.5) * 3 + (Math.random() - 0.5);
 	}
 
-	return net;
+	return n;
 }
 
-function crossOver(net1, net2){
+function crossOver(n1, n2){
 	if (Math.random() > 0.5){ //Swap probability
-		let temp = net1;
-		net1 = net2;
-		net2 = temp;
+		let temp = n1;
+		n1 = n2;
+		n2 = temp;
 	}
 	
 	//Deep clone the neurons of both nets to avoid changing the originals
-	let net1Copy = JSON.parse(JSON.stringify(net1));
-	let net2Copy = JSON.parse(JSON.stringify(net2));
-	let net1Neurons = net1Copy.neurons;
-	let net2Neurons = net2Copy.neurons;
+	let n1Copy = JSON.parse(JSON.stringify(n1));
+	let n2Copy = JSON.parse(JSON.stringify(n2));
+	let n1Neurons = n1Copy.neurons;
+	let n2Neurons = n2Copy.neurons;
 
 	//Select a random number of neurons to perform a cross over of networks neurons
-	let slicePoint = Math.round(net1Neurons.length * Math.random());
+	let slicePoint = Math.round(n1Neurons.length * Math.random());
 	for (let i=slicePoint; i<net1Neurons; i++){
 		//Swap bias values
-		let temp = net1Neurons[i]['bias'];
-		net1Neurons[i]['bias'] = net2Neurons[i]['bias'];
-		net2Neurons[i]['bias'] = temp;
+		let temp = n1Neurons[i]["bias"];
+		n1Neurons[i]["bias"] = n2Neurons[i]["bias"];
+		n2Neurons[i]["bias"] = temp;
 	}
 
-	return net1Copy; 
+	return n1Copy; 
 }
 
 
