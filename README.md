@@ -9,5 +9,5 @@ Det här arbetet handlar om att med hjälp av inmatningar och använding utav et
 
 
 # Vad lärde jag mig
-- Jag har lärt mig grundläggande kunskaper om hur man änvänder ramverket phaser 3
+- Jag har lärt mig grundläggande kunskaper om hur man använder ramverket phaser 3
 - Jag har lärt mig att bygga ihop ett neuralt nätverk samman kopplat med genetiska algoritmer
