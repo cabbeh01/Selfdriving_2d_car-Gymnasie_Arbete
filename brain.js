@@ -142,7 +142,7 @@ function crossOver(n1, n2){
 
 	//Select a random number of neurons to perform a cross over of networks neurons
 	let slicePoint = Math.round(n1Neurons.length * Math.random());
-	for (let i=slicePoint; i<net1Neurons; i++){
+	for (let i=slicePoint; i<n1Neurons; i++){
 		//Swap bias values
 		let temp = n1Neurons[i]["bias"];
 		n1Neurons[i]["bias"] = n2Neurons[i]["bias"];
