@@ -9,8 +9,8 @@ class Car {
     angularDrag = 0.1;
     power = 0.35;
     turnspeed = .07;
-    maxVelocity = 4;
-    minVelocity = -4;
+    maxVelocity = 1.6;
+    minVelocity = -1.6;
 
     startX;
     startY;
@@ -18,7 +18,7 @@ class Car {
 
     //Sensor
     sensor = [3];
-    lenghtsensors = 50;
+    lenghtsensors = 90;
 
 
     car = new Object;
@@ -62,7 +62,7 @@ class Car {
         this.velocityX = 0;
         this.velocityY = 0;
         this.countTracks = 0;
-        advanceGenome(stopTimer(), this.countTracks);
+        advanceGenome(stopTimer() + this.countTracks);
         startTimer();
     }
 

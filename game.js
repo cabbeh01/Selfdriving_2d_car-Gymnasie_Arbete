@@ -38,7 +38,7 @@ let fps ={
 }
 
 let game = new Phaser.Game(config);
-let nCar = new Car(500,153,this);
+let nCar = new Car(685,153,this);
 
 let Nsens1 = 0;
 let Nsens2 = 0;
@@ -81,12 +81,23 @@ function create ()
 
     sensor1 = this.add.rectangle(0, 0, nCar.lenghtsensors, 2, 0x00ff00);
     sensor2 = this.add.rectangle(0, 0, nCar.lenghtsensors, 2, 0x00ff00);
-    sensor3 = this.add.rectangle(0, 0, nCar.lenghtsensors, 2, 0x00ff00);
+    sensor3 = this.add.rectangle(0, 0, 100, 2, 0x00ff00);
 
     //Intial matter sensors
     for(let i = 0;i<3;i++){
         //nCar.sensor[i] = this.matter.add.rectangle(nCar.car.x, nCar.car.y, nCar.lenghtsensors, 2, SensorSetting);
-        nCar.sensor[i] = this.matter.add.sprite(nCar.car.x + 50, nCar.car.y + 50).setBody(SensorSetting);
+        if(i== 2){
+            nCar.sensor[i] = this.matter.add.sprite(nCar.car.x + 50, nCar.car.y + 50).setBody({
+                isSensor: true,
+                type: "rectangle",
+                height:2,
+                width:100
+            });
+        }
+        else{
+            nCar.sensor[i] = this.matter.add.sprite(nCar.car.x + 50, nCar.car.y + 50).setBody(SensorSetting);
+        }
+        
         nCar.sensor[i].body.label = "Sensor " + (i+1);
     }
 
@@ -127,13 +138,13 @@ function create ()
         callback: eventData => {
             
             if(eventData.gameObjectA.body.label === "Sensor 1"){
-                Nsens1 = eventData.pair.collision.depth/35;
+                Nsens1 = eventData.pair.collision.depth*10;
             }
             if(eventData.gameObjectA.body.label === "Sensor 2"){
-                Nsens2 = eventData.pair.collision.depth/35;
+                Nsens2 = eventData.pair.collision.depth*10;
             }
             if(eventData.gameObjectA.body.label === "Sensor 3"){
-                Nsens3 = eventData.pair.collision.depth/35;
+                Nsens3 = eventData.pair.collision.depth*10;
             }
             
         }
@@ -168,6 +179,7 @@ function update (timestamp, elapsed)
         fps.lag -= fps.frameduration;
     }
     
+    
     renderGrapichs();
     
 }
@@ -198,8 +210,8 @@ function physicsRend(currentframe) {
         nCar.Steer(1);
         nCar.MoveForward();
     }
-    nCar.MoveForward();
     
+    nCar.MoveForward();
 }
     
 function renderGrapichs(){
@@ -246,8 +258,8 @@ function renderGrapichs(){
     
     //nCar.sensor[2].position = {x:nCar.car.x + Math.cos(nCar.car.rotation)*nCar.lenghtsensors/2,y:nCar.car.y + Math.sin(nCar.car.rotation)*nCar.lenghtsensors/2};
     nCar.sensor[2].angle = nCar.car.rotation*(180/Math.PI);
-    nCar.sensor[2].setPosition(nCar.car.x + Math.cos(nCar.car.rotation)*nCar.lenghtsensors/2, nCar.car.y + Math.sin(nCar.car.rotation)*nCar.lenghtsensors/2);
-    sensor3.setPosition(nCar.car.x + Math.cos(nCar.car.rotation)*nCar.lenghtsensors/2, nCar.car.y + Math.sin(nCar.car.rotation)*nCar.lenghtsensors/2);
+    nCar.sensor[2].setPosition(nCar.car.x + Math.cos(nCar.car.rotation)*100/2, nCar.car.y + Math.sin(nCar.car.rotation)*100/2);
+    sensor3.setPosition(nCar.car.x + Math.cos(nCar.car.rotation)*100/2, nCar.car.y + Math.sin(nCar.car.rotation)*100/2);
     sensor3.setRotation(nCar.car.rotation);
 
 

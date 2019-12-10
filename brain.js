@@ -23,14 +23,14 @@ let Architect = synaptic.Architect;
 
 //let inputLayer = new Layer(3);
 let inputLayer = 3; 
-let hiddenLayer = 6;
+let hiddenLayer = 30;
 let outputLayer = 1 
 
 let fitness = 0;
-let learningrate = .1;
-let populationSize = 30;
+let learningrate = .05;
+let populationSize = 50;
 let nBest = 2;
-let mutationProbability = 0.2;
+let mutationProbability = 0.1;
 
 let generation = 0;
 
@@ -38,7 +38,7 @@ let genomes = [];
 
 while (genomes.length < populationSize) {
     //Population genomes with random perceptron networks
-    genomes.push( new Architect.Perceptron(inputLayer, hiddenLayer, hiddenLayer, outputLayer) );
+    genomes.push( new Architect.Perceptron(inputLayer, hiddenLayer, hiddenLayer, hiddenLayer, outputLayer) );
 }
 
 let genome = 0;
