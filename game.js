@@ -121,18 +121,20 @@ function create ()
         }
     });
 
-    this.matterCollision.addOnCollideStart({
+    this.matterCollision.addOnCollideActive({
         objectA: nCar.sensor,
         objectB: road,
         callback: eventData => {
+            
             if(eventData.gameObjectA.body.label === "Sensor 1"){
-                Nsens1 = 1;
+                Nsens1 = eventData.pair.collision.depth/35;
             }
             if(eventData.gameObjectA.body.label === "Sensor 2"){
-                Nsens2 = 1;
+                console.log();
+                Nsens2 = eventData.pair.collision.depth/35;
             }
             if(eventData.gameObjectA.body.label === "Sensor 3"){
-                Nsens3 = 1;
+                Nsens3 = eventData.pair.collision.depth/35;
             }
             
         }
@@ -221,6 +223,8 @@ function renderGrapichs(){
     velocityX.setText("VelocityX: " + Math.round(nCar.velocityX));
     velocityY.setText("VelocityY: " + Math.round(nCar.velocityY));
 
+    generationT.setText("Gen: " + generation);
+
     output.setText("Output: " + activate([Nsens1,Nsens2,Nsens3]));
 
     //nCar.sensor[0].position = {x:nCar.car.x + Math.cos(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2,y:nCar.car.y + Math.sin(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2};
@@ -263,6 +267,9 @@ function createTextObject(g){
     fps2Text = g.add.text(1130, 52, "FPS: ", { fontSize: "32px", fill: "#fff" });
 
     stopwatch = g.add.text(1130, 122, "Stopwatch: ", { fontSize: "32px", fill: "#fff" });
+    bestTime = g.add.text(1035, 152, "Best Time: ", { fontSize: "32px", fill: "#fff" });
+
+    generationT = g.add.text(1130, 212, "Gen: ", { fontSize: "32px", fill: "#fff" });
 
 
     //Text neural network
