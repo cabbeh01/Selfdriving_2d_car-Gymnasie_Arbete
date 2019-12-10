@@ -130,7 +130,6 @@ function create ()
                 Nsens1 = eventData.pair.collision.depth/35;
             }
             if(eventData.gameObjectA.body.label === "Sensor 2"){
-                console.log();
                 Nsens2 = eventData.pair.collision.depth/35;
             }
             if(eventData.gameObjectA.body.label === "Sensor 3"){

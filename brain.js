@@ -27,8 +27,8 @@ let hiddenLayer = 6;
 let outputLayer = 1 
 
 let fitness = 0;
-let learningrate = .03;
-let populationSize = 20;
+let learningrate = .1;
+let populationSize = 30;
 let nBest = 2;
 let mutationProbability = 0.2;
 
