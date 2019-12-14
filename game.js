@@ -178,8 +178,6 @@ function update (timestamp, elapsed)
         physicsRend(fps.frameduration);
         fps.lag -= fps.frameduration;
     }
-    
-    
     renderGrapichs();
     
 }
@@ -189,15 +187,16 @@ function physicsRend(currentframe) {
     //Phys checks and server IO events update state of entities here
     nCar.Update();
     if(cursors.down.isDown){
-        nCar.MoveBackwards(nCar.car.rotation);
+        //nCar.MoveBackwards(nCar.car.rotation);
+        nCar.Brake();
     }
     if(cursors.up.isDown){
         nCar.MoveForward(nCar.car.rotation);
     }
-    if(cursors.left.isDown && cursors.up.isDown){
+    if(cursors.left.isDown){
         nCar.Steer(-1);
     }
-    if(cursors.right.isDown && cursors.up.isDown){
+    if(cursors.right.isDown){
         nCar.Steer(1);
     }
 

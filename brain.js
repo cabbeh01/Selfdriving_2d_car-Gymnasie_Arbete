@@ -23,14 +23,14 @@ let Architect = synaptic.Architect;
 
 //let inputLayer = new Layer(3);
 let inputLayer = 3; 
-let hiddenLayer = 30;
+let hiddenLayer = 4;
 let outputLayer = 1 
 
 let fitness = 0;
-let learningrate = .05;
+let learningrate = .02;
 let populationSize = 50;
 let nBest = 2;
-let mutationProbability = 0.1;
+let mutationProbability = 0.2;
 
 let generation = 0;
 
@@ -38,11 +38,35 @@ let genomes = [];
 
 while (genomes.length < populationSize) {
     //Population genomes with random perceptron networks
-    genomes.push( new Architect.Perceptron(inputLayer, hiddenLayer, hiddenLayer, hiddenLayer, outputLayer) );
+    genomes.push( new Architect.Perceptron(inputLayer,hiddenLayer, hiddenLayer, outputLayer) );
 }
 
 let genome = 0;
 
+
+var el = document.getElementById('get_the_file');
+
+
+if(el){
+	el.addEventListener("change", function() {
+		var file_to_read = document.getElementById("get_the_file").files[0];
+		var fileread = new FileReader();
+		fileread.onload = function(e) {
+				console.log("Loaded generation");
+				var content = e.target.result;
+				// console.log(content);
+				var genomes = JSON.parse(content); // Array of Objects.
+				genome = 0;
+				generation = 0;
+				genomes = []
+				// load genomes in to current genomes
+				genomes = genomes.map(function(genome){ return Network.fromJSON(genome) });
+		  		console.log(genomes); // You can index every object
+			};
+
+			fileread.readAsText(file_to_read);
+	  });
+}
 
 
 //Training the network
@@ -79,7 +103,7 @@ function createNextGeneration(){
 		 
 		//Cross over the two randomly selected genomes
 		let cO = crossOver(genome1, genome2);
-		console.log(cO);
+		//console.log(cO);
 		//Mutate using the new genome created from the crossover
 		let mutatedGenome = mutate(cO);
 		//Add to next generation
@@ -93,7 +117,7 @@ function createNextGeneration(){
 	}
 }
 
-function keepBestGenomes(maximize=false){
+function keepBestGenomes(maximize=true){
 	//Sort genomes on fitness
 	genomes.sort(function(a, b){ return a["fitness"] - b["fitness"] });
 	if (maximize) genomes.reverse(); //Allows for fitness to be maximized 
@@ -153,26 +177,25 @@ function crossOver(n1, n2){
 }
 
 
+// send the current generation genomes to the server to save as a file
+function SaveGeneration(filename){
+	console.log("Saving generation");
+	// create array of genomes objects 
+	var generation = genomes.map(function(genome){ return genome.toJSON(); });
+	var serializedGen = JSON.stringify(generation);
 
-
-
-
-
-
-
-////////////////
-function GuessWord(lenght){
-    let word = "";
-    for(let i = 0; i<lenght;i++){
-        n = Math.floor(Math.random()*125);
-        while(!(n > 96 && n < 123)){
-            n = Math.floor(Math.random()*125);
-        }
-        
-        a = String.fromCharCode(n);
-
-        word += a;
-    }
-    console.log(word);
+	download(serializedGen, filename+".json", "text/plain");
 }
-//Test the network
+
+
+
+
+function download(content, fileName, contentType) {
+    var a = document.createElement("a");
+    var file = new Blob([content], {type: contentType});
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+}
+
+

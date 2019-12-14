@@ -4,13 +4,13 @@ class Car {
     
     velocityX=0;
     velocityY=0;
-    drag=0.92;
+    drag=0.82;
     angularVelocity=0.001;
     angularDrag = 0.1;
     power = 0.35;
-    turnspeed = .07;
-    maxVelocity = 1.6;
-    minVelocity = -1.6;
+    turnspeed = .09;
+    maxVelocity = 3;
+    minVelocity = -3;
 
     startX;
     startY;
@@ -55,14 +55,26 @@ class Car {
         }
     }
 
+    Brake(){
+        if(this.velocityX > 0 && this.velocityY >0){
+            this.velocityX -= Math.cos(this.car.rotation) * this.power;
+            this.velocityY -= Math.sin(this.car.rotation) * this.power;
+        }
+    }
+
     ResetCar(){
+        
+        let fitness = parseFloat(this.countTracks)*10 + parseFloat(stopTimer());
+        //console.log(this.countTracks);
+        //console.log(stop);
+        advanceGenome(fitness);
+        
         this.car.x = this.startX;
         this.car.y = this.startY;
         this.car.rotation = 0;
         this.velocityX = 0;
         this.velocityY = 0;
         this.countTracks = 0;
-        advanceGenome(stopTimer() + this.countTracks);
         startTimer();
     }
 

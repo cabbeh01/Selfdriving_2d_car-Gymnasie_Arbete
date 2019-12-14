@@ -18,7 +18,7 @@ function startTimer(){
 
 function stopTimer(){
     clearTimeout(t);
-    temp = s+0.1*ms
+    temp = (s+(0.1*ms)).toFixed(2);
 
     s = 0;
     ms = 0;
