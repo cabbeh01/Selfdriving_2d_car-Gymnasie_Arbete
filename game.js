@@ -178,6 +178,16 @@ function update (timestamp, elapsed)
         physicsRend(fps.frameduration);
         fps.lag -= fps.frameduration;
     }
+<<<<<<< HEAD
+=======
+    
+    physicsRend(fps.frameduration);
+    physicsRend(fps.frameduration);
+    physicsRend(fps.frameduration);
+    physicsRend(fps.frameduration);
+    physicsRend(fps.frameduration);
+    
+>>>>>>> 301ef2cde6b0f650e932bc8311e0788e7ceba498
     renderGrapichs();
     
 }

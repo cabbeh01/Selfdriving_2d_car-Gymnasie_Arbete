@@ -29,8 +29,13 @@ let outputLayer = 1
 let fitness = 0;
 let learningrate = .02;
 let populationSize = 50;
+<<<<<<< HEAD
 let nBest = 2;
 let mutationProbability = 0.2;
+=======
+let nBest = 5;
+let mutationProbability = 0.15;
+>>>>>>> 301ef2cde6b0f650e932bc8311e0788e7ceba498
 
 let generation = 0;
 
