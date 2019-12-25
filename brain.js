@@ -154,21 +154,23 @@ function crossOver(n1, n2){
 
 
 // send the current generation genomes to the server to save as a file
-function SaveGeneration(filename){
+function saveGeneration(){
 	console.log("Saving generation");
+	let filename = "undefined";
+	if(!document.getElementById("name_genome").value == ""){
+		filename = document.getElementById("name_genome").value;
+	}
+	
 	// create array of genomes objects 
-	var generation = genomes.map(function(genome){ return genome.toJSON(); });
-	var serializedGen = JSON.stringify(generation);
+	let saveGeneration = genomes.map(function(genome){ return genome.toJSON(); });
+	let serializedGen = JSON.stringify(saveGeneration);
 
-	download(serializedGen, filename+".json", "text/plain");
+	downloadGeneration(serializedGen, filename+".json", "text/plain");
 }
 
-
-
-
-function download(content, fileName, contentType) {
-    var a = document.createElement("a");
-    var file = new Blob([content], {type: contentType});
+function downloadGeneration(content, fileName, contentType) {
+    let a = document.createElement("a");
+    let file = new Blob([content], {type: contentType});
     a.href = URL.createObjectURL(file);
     a.download = fileName;
     a.click();
@@ -176,39 +178,29 @@ function download(content, fileName, contentType) {
 
 
 //Load generation
-/*
-function LoadGeneration(){
+
+function loadGeneration(){
 	console.log("Loading generation");
+	let selectedFile = document.getElementById("get_the_file").files[0];
+	
+	let reader = new FileReader();
+	reader.readAsText(selectedFile);
 
-	var files = event.target.files;
-	console.log(files);
-	var selectedFile = event.target.files[0];
-	var reader = new FileReader();
-  
-	var result = document.getElementById("result");
-  
-	reader.onload = function(event) {
-	  result.innerHTML = event.target.result;
+	reader.onload = function() {
+		//console.log(reader.result);
+		
+		let importGenome = JSON.parse(reader.result); // Array of Objects.
+		genome = 0;
+		generation = 0;
+		genomes = []
+		//Load genomes in to current genomes
+		genomes = importGenome.map(function(genome){ return Network.fromJSON(genome) });
+		console.log(genomes); // You can index every object
+			
+		nCar.ResetCar(true);
 	};
-  
-	console.log(reader.readAsText(selectedFile));
-
-	console.log("Loaded generation");
-	var content = e.target.result;
-	// console.log(content);
-	var genomes = JSON.parse(content); // Array of Objects.
-	genome = 0;
-	generation = 0;
-	genomes = []
-	// load genomes in to current genomes
-	genomes = genomes.map(function(genome){ return Network.fromJSON(genome) });
-	  console.log(genomes); // You can index every object
-	  
-	nCar.ResetCar(true);
-
+	
+	reader.onerror = function() {
+		nCar.ResetCar(false);
+	};
 }
-*/
-
-
-
-
