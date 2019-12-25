@@ -19,7 +19,7 @@ class Car {
     //Sensor
     sensor = [3];
     lenghtsensors = 90;
-
+    loadedmodel = false;
 
     car = new Object;
     
@@ -62,20 +62,31 @@ class Car {
         }
     }
 
-    ResetCar(){
-        
-        let fitness = parseFloat(this.countTracks)*10 + parseFloat(stopTimer());
-        //console.log(this.countTracks);
-        //console.log(stop);
-        advanceGenome(fitness);
-        
-        this.car.x = this.startX;
-        this.car.y = this.startY;
-        this.car.rotation = 0;
-        this.velocityX = 0;
-        this.velocityY = 0;
-        this.countTracks = 0;
-        startTimer();
+    ResetCar(loadedmodel = false){
+        if(!loadedmodel){
+            let fitness = parseFloat(this.countTracks)*10 + parseFloat(stopTimer());
+            //console.log(this.countTracks);
+            //console.log(stop);
+            advanceGenome(fitness);
+            
+            this.car.x = this.startX;
+            this.car.y = this.startY;
+            this.car.rotation = 0;
+            this.velocityX = 0;
+            this.velocityY = 0;
+            this.countTracks = 0;
+            startTimer();
+        }
+        else{
+            stopTimer();
+            this.car.x = this.startX;
+            this.car.y = this.startY;
+            this.car.rotation = 0;
+            this.velocityX = 0;
+            this.velocityY = 0;
+            this.countTracks = 0;
+            startTimer();
+        }
     }
 
     //Right is 1 and Left is -1

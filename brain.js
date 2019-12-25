@@ -44,30 +44,6 @@ while (genomes.length < populationSize) {
 let genome = 0;
 
 
-var el = document.getElementById('get_the_file');
-
-
-if(el){
-	el.addEventListener("change", function() {
-		var file_to_read = document.getElementById("get_the_file").files[0];
-		var fileread = new FileReader();
-		fileread.onload = function(e) {
-				console.log("Loaded generation");
-				var content = e.target.result;
-				// console.log(content);
-				var genomes = JSON.parse(content); // Array of Objects.
-				genome = 0;
-				generation = 0;
-				genomes = []
-				// load genomes in to current genomes
-				genomes = genomes.map(function(genome){ return Network.fromJSON(genome) });
-		  		console.log(genomes); // You can index every object
-			};
-
-			fileread.readAsText(file_to_read);
-	  });
-}
-
 
 //Training the network
 
@@ -197,5 +173,42 @@ function download(content, fileName, contentType) {
     a.download = fileName;
     a.click();
 }
+
+
+//Load generation
+/*
+function LoadGeneration(){
+	console.log("Loading generation");
+
+	var files = event.target.files;
+	console.log(files);
+	var selectedFile = event.target.files[0];
+	var reader = new FileReader();
+  
+	var result = document.getElementById("result");
+  
+	reader.onload = function(event) {
+	  result.innerHTML = event.target.result;
+	};
+  
+	console.log(reader.readAsText(selectedFile));
+
+	console.log("Loaded generation");
+	var content = e.target.result;
+	// console.log(content);
+	var genomes = JSON.parse(content); // Array of Objects.
+	genome = 0;
+	generation = 0;
+	genomes = []
+	// load genomes in to current genomes
+	genomes = genomes.map(function(genome){ return Network.fromJSON(genome) });
+	  console.log(genomes); // You can index every object
+	  
+	nCar.ResetCar(true);
+
+}
+*/
+
+
 
 
