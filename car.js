@@ -2,6 +2,7 @@
 
 class Car {
     
+    //Car propities
     velocityX=0;
     velocityY=0;
     drag=0.82;
@@ -14,13 +15,16 @@ class Car {
 
     startX;
     startY;
+
+    //Neural network propeties of car
     countTracks = 0;
+    loadedmodel = false;
 
     //Sensor
     sensor = [3];
     lenghtsensors = 90;
-    loadedmodel = false;
 
+    //Creating a new object of car
     car = new Object;
     
     constructor(x,y){
@@ -30,6 +34,7 @@ class Car {
         this.startY = y;
     }
 
+    //Function that calls each iteration and updates the propities of the current car
     Update(){
         this.car.x += this.velocityX;
         this.car.y += this.velocityY;
@@ -39,14 +44,12 @@ class Car {
         this.angularVelocity *= this.angularDrag;
     }
 
+    //
     MoveBackwards(){
         this.velocityX -= Math.cos(this.car.rotation) * this.power;
         this.velocityY -= Math.sin(this.car.rotation) * this.power;
     }
 
-    GettotalVelocity(){
-        return velocityX + velocityY;
-    }
 
     MoveForward(){
         if(this.velocityX < this.maxVelocity && this.velocityY < this.maxVelocity && this.velocityX > this.minVelocity && this.velocityY > this.minVelocity){

@@ -93,10 +93,10 @@ function createNextGeneration(){
 	}
 }
 
-function keepBestGenomes(maximize=true){
+function keepBestGenomes(){
 	//Sort genomes on fitness
 	genomes.sort(function(a, b){ return a["fitness"] - b["fitness"] });
-	if (maximize) genomes.reverse(); //Allows for fitness to be maximized 
+	genomes.reverse(); //Allows for fitness to be maximized 
 	console.log(genomes);
 	
 	while (genomes.length > nBest) //Remove worst genomes
