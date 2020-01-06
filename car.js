@@ -34,7 +34,7 @@ class Car {
         this.startY = y;
     }
 
-    //Function that calls each iteration and updates the propities of the current car
+    //Calls each iteration and updates the propities of the car
     Update(){
         this.car.x += this.velocityX;
         this.car.y += this.velocityY;
@@ -44,13 +44,7 @@ class Car {
         this.angularVelocity *= this.angularDrag;
     }
 
-    //
-    MoveBackwards(){
-        this.velocityX -= Math.cos(this.car.rotation) * this.power;
-        this.velocityY -= Math.sin(this.car.rotation) * this.power;
-    }
-
-
+    //Moves the car forward
     MoveForward(){
         if(this.velocityX < this.maxVelocity && this.velocityY < this.maxVelocity && this.velocityX > this.minVelocity && this.velocityY > this.minVelocity){
             this.velocityX += Math.cos(this.car.rotation) * this.power;
@@ -58,6 +52,8 @@ class Car {
         }
     }
 
+
+    //Brakes the car
     Brake(){
         if(this.velocityX > 0 && this.velocityY >0){
             this.velocityX -= Math.cos(this.car.rotation) * this.power;
@@ -65,7 +61,27 @@ class Car {
         }
     }
 
+
+    //Moves the car backwards
+    MoveBackwards(){
+        this.velocityX -= Math.cos(this.car.rotation) * this.power;
+        this.velocityY -= Math.sin(this.car.rotation) * this.power;
+    }
+
+    //Steer function
+    Steer(a){
+        //Right is 1 and Left is -1
+        if(a === -1){
+            this.angularVelocity -= this.turnspeed;
+        }
+        else if(a === 1){
+            this.angularVelocity += this.turnspeed;
+        }
+    }
+
+    //Calls when car crashes into somethings
     ResetCar(loadedmodel = false){
+        //Drives by a neural network
         if(!loadedmodel){
             let fitness = parseFloat(this.countTracks)*10 + parseFloat(stopTimer());
             //console.log(this.countTracks);
@@ -80,6 +96,7 @@ class Car {
             this.countTracks = 0;
             startTimer();
         }
+        //Drives by a user
         else{
             stopTimer();
             this.car.x = this.startX;
@@ -89,16 +106,6 @@ class Car {
             this.velocityY = 0;
             this.countTracks = 0;
             startTimer();
-        }
-    }
-
-    //Right is 1 and Left is -1
-    Steer(a){
-        if(a === -1){
-            this.angularVelocity -= this.turnspeed;
-        }
-        else if(a === 1){
-            this.angularVelocity += this.turnspeed;
         }
     }
 }

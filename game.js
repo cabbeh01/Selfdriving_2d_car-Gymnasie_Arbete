@@ -187,8 +187,8 @@ function physicsRend(currentframe) {
     //Phys checks and server IO events update state of entities here
     nCar.Update();
     if(cursors.down.isDown){
-        //nCar.MoveBackwards(nCar.car.rotation);
-        nCar.Brake();
+        nCar.MoveBackwards(nCar.car.rotation);
+        //nCar.Brake();
     }
     if(cursors.up.isDown){
         nCar.MoveForward(nCar.car.rotation);
