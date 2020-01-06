@@ -1,4 +1,5 @@
 /// In this file I write code for a stopwatch that I will use in my game and learning of the model
+
 let ms = 0;
 let s = 0;
 

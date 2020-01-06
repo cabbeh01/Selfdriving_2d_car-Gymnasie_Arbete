@@ -1,8 +1,10 @@
+// This is the main file for the whole project. It contains the game part and communicate with the neuralnetwork javascript file
 
-let config = {
+// Configuration for Phaser api
+const config = {
     type: Phaser.AUTO,
-    width: 1400,
-    height: 800,
+    width: 1400, // Canvas width
+    height: 800, // Canvas height
     parent: "game",
     backgroundColor: 0x0ecf8f,
     scene: {
@@ -12,14 +14,14 @@ let config = {
     },
     physics:{
         default: "matter",
+        // Propities for the separate physics engine matter.js
         matter: {
             gravity: {
                 y: 0
             }
-            //debug: true
+            // debug: true
         }
     },
-
     plugins: {
         scene: [
           {
@@ -31,7 +33,8 @@ let config = {
       }
 }
 
-let fps ={
+// Settings for the fps
+const fps = {
     lag:0,
     fps: 60,
     frameduration: (1000/ 60)
@@ -40,33 +43,33 @@ let fps ={
 let game = new Phaser.Game(config);
 let nCar = new Car(685,153,this);
 
-let Nsens1 = 0;
-let Nsens2 = 0;
-let Nsens3 = 0;
+// Sensor value of distant to ground
+let nSens = [0,0,0];
 
-
-const COLORLINE = 0x00ffff;
+// Color of the diffrent sensors
+const COLOR_ROADLINE = 0x00ffff;
+const COLOR_SENSOR = 0x00ff00;
 
 const opt ={
     isSensor: true,
     label: "tracker"
 }
-const SensorSetting ={
+const sensorSetting ={
     isSensor: true,
     type: "rectangle",
     height:2,
     width:nCar.lenghtsensors
 }
 
-
+// Calls first. Loads inportant graphics or files to get accessed by the code in update and create
 function preload ()
 {
-    //Load graphics
+    // Load graphics
     this.load.image("ground", "./Graphics/background2.png");
     this.load.image("car", "./Graphics/car.png");
     this.load.image("road", "./Graphics/road.png");
 
-    //Load collision shape
+    // Load collision shape
     this.load.json("shapes", "./Graphics/shapes.json");
     
 }
@@ -79,13 +82,14 @@ function create ()
 
     nCar.car = this.matter.add.sprite(nCar.car.x, nCar.car.y, "car","car",{shape: shapes.car});
 
-    sensor1 = this.add.rectangle(0, 0, nCar.lenghtsensors, 2, 0x00ff00);
-    sensor2 = this.add.rectangle(0, 0, nCar.lenghtsensors, 2, 0x00ff00);
-    sensor3 = this.add.rectangle(0, 0, 100, 2, 0x00ff00);
+    // The visable sensors
+    sensor1 = this.add.rectangle(0, 0, nCar.lenghtsensors, 2, COLOR_SENSOR);
+    sensor2 = this.add.rectangle(0, 0, nCar.lenghtsensors, 2, COLOR_SENSOR);
+    sensor3 = this.add.rectangle(0, 0, 100, 2, COLOR_SENSOR);
 
-    //Intial matter sensors
+    // Intial matter sensors
     for(let i = 0;i<3;i++){
-        //nCar.sensor[i] = this.matter.add.rectangle(nCar.car.x, nCar.car.y, nCar.lenghtsensors, 2, SensorSetting);
+        // nCar.sensor[i] = this.matter.add.rectangle(nCar.car.x, nCar.car.y, nCar.lenghtsensors, 2, sensorSetting);
         if(i== 2){
             nCar.sensor[i] = this.matter.add.sprite(nCar.car.x + 50, nCar.car.y + 50).setBody({
                 isSensor: true,
@@ -95,13 +99,13 @@ function create ()
             });
         }
         else{
-            nCar.sensor[i] = this.matter.add.sprite(nCar.car.x + 50, nCar.car.y + 50).setBody(SensorSetting);
+            nCar.sensor[i] = this.matter.add.sprite(nCar.car.x + 50, nCar.car.y + 50).setBody(sensorSetting);
         }
         
         nCar.sensor[i].body.label = "Sensor " + (i+1);
     }
 
-    //Gör så att inte bilen och sensorerna kolliderar med varandra
+    // Seperates car and sensors to avoid collision between each others 
     nCar.sensor[0].setCollisionGroup(-1);
     nCar.sensor[1].setCollisionGroup(-1);
     nCar.sensor[2].setCollisionGroup(-1);
@@ -138,13 +142,13 @@ function create ()
         callback: eventData => {
             
             if(eventData.gameObjectA.body.label === "Sensor 1"){
-                Nsens1 = eventData.pair.collision.depth*10;
+                nSens[0] = eventData.pair.collision.depth*10;
             }
             if(eventData.gameObjectA.body.label === "Sensor 2"){
-                Nsens2 = eventData.pair.collision.depth*10;
+                nSens[1] = eventData.pair.collision.depth*10;
             }
             if(eventData.gameObjectA.body.label === "Sensor 3"){
-                Nsens3 = eventData.pair.collision.depth*10;
+                nSens[2] = eventData.pair.collision.depth*10;
             }
             
         }
@@ -155,24 +159,24 @@ function create ()
         objectB: road,
         callback: eventData => {
             if(eventData.gameObjectA.body.label === "Sensor 1"){
-                Nsens1 = 0;
+                nSens[0] = 0;
             }
             if(eventData.gameObjectA.body.label === "Sensor 2"){
-                Nsens2 = 0;
+                nSens[1] = 0;
             }
             if(eventData.gameObjectA.body.label === "Sensor 3"){
-                Nsens3 = 0;
+                nSens[2] = 0;
             }
-            //nCar.countTracks++;
+            // nCar.countTracks++;
         }
     });
 
-    //debugMode(this);
+    // debugMode(this);
 }
 
 function update (timestamp, elapsed)
 {
-    //Counts to correct frame then runs physicsRend
+    // Counts to correct frame then runs physicsRend
     fps.lag += elapsed;
     while(fps.lag >= fps.frameduration){
         physicsRend(fps.frameduration);
@@ -184,11 +188,11 @@ function update (timestamp, elapsed)
 
 
 function physicsRend(currentframe) {
-    //Phys checks and server IO events update state of entities here
+    // Phys checks and server IO events update state of entities here
     nCar.Update();
     if(cursors.down.isDown){
         nCar.MoveBackwards(nCar.car.rotation);
-        //nCar.Brake();
+        // nCar.Brake();
     }
     if(cursors.up.isDown){
         nCar.MoveForward(nCar.car.rotation);
@@ -200,12 +204,12 @@ function physicsRend(currentframe) {
         nCar.Steer(1);
     }
 
-    //console.log([Nsens1,Nsens2,Nsens3]);
-    if(activate([Nsens1,Nsens2,Nsens3]) > 0.5){
+    // console.log([nSens[0],nSens[1],nSens[1]]);
+    if(activate([nSens[0],nSens[1],nSens[2]]) > 0.5){
         nCar.Steer(-1);
         nCar.MoveForward();
     }
-    else if(activate([Nsens1,Nsens2,Nsens3]) < 0.5){
+    else if(activate([nSens[0],nSens[1],nSens[2]]) < 0.5){
         nCar.Steer(1);
         nCar.MoveForward();
     }
@@ -214,7 +218,7 @@ function physicsRend(currentframe) {
 }
     
 function renderGrapichs(){
-    //Rendering graphics related stuff here
+    // Rendering graphics related stuff here
     xText.setText("X: "+ Math.round(nCar.car.x));
     yText.setText("Y: "+ Math.round(nCar.car.y));
     rText.setText(Math.round(nCar.car.rotation*(180/Math.PI)) +"°");
@@ -224,22 +228,22 @@ function renderGrapichs(){
 
     stopwatch.setText("Time: " +s+"s "+ ms+"hs", { fontSize: "32px", fill: "#fff" });
 
-    //Neural network
+    // Neural network
 
-    sens1.setText("Sens 1: " + Nsens1);
-    sens2.setText("Sens 2: " + Nsens2);
-    sens3.setText("Sens 3: " + Nsens3);
+    sens1.setText("Sens 1: " + nSens[0]);
+    sens2.setText("Sens 2: " + nSens[1]);
+    sens3.setText("Sens 3: " + nSens[2]);
 
     velocityX.setText("VelocityX: " + Math.round(nCar.velocityX));
     velocityY.setText("VelocityY: " + Math.round(nCar.velocityY));
 
     generationT.setText("Gen: " + generation);
 
-    output.setText("Output: " + activate([Nsens1,Nsens2,Nsens3]));
+    output.setText("Output: " + activate([nSens[0],nSens[1],nSens[2]]));
 
-    //nCar.sensor[0].position = {x:nCar.car.x + Math.cos(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2,y:nCar.car.y + Math.sin(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2};
-    //sensor[0].position.x = nCar.car.x + Math.cos(nCar.car.rotation + Math.PI/4)*lenghtsensors/2;
-    //sensor[0].position.y = nCar.car.y + Math.sin(nCar.car.rotation + Math.PI/4)*lenghtsensors/2;
+    // nCar.sensor[0].position = {x:nCar.car.x + Math.cos(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2,y:nCar.car.y + Math.sin(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2};
+    // sensor[0].position.x = nCar.car.x + Math.cos(nCar.car.rotation + Math.PI/4)*lenghtsensors/2;
+    // sensor[0].position.y = nCar.car.y + Math.sin(nCar.car.rotation + Math.PI/4)*lenghtsensors/2;
 
     nCar.sensor[0].angle = (nCar.car.rotation + Math.PI/4)*(180/Math.PI);
     nCar.sensor[0].setPosition(nCar.car.x + Math.cos(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2, nCar.car.y + Math.sin(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2);
@@ -248,22 +252,19 @@ function renderGrapichs(){
 
 
 
-    //nCar.sensor[1].position ={x:nCar.car.x + Math.cos(nCar.car.rotation + -Math.PI/4)*nCar.lenghtsensors/2,y:nCar.car.y + Math.sin(nCar.car.rotation + -Math.PI/4)*nCar.lenghtsensors/2};
+    // nCar.sensor[1].position ={x:nCar.car.x + Math.cos(nCar.car.rotation + -Math.PI/4)*nCar.lenghtsensors/2,y:nCar.car.y + Math.sin(nCar.car.rotation + -Math.PI/4)*nCar.lenghtsensors/2};
     nCar.sensor[1].angle = (nCar.car.rotation - Math.PI/4)*(180/Math.PI);
     nCar.sensor[1].setPosition(nCar.car.x + Math.cos(nCar.car.rotation + -Math.PI/4)*nCar.lenghtsensors/2, nCar.car.y + Math.sin(nCar.car.rotation + -Math.PI/4)*nCar.lenghtsensors/2);
     sensor2.setPosition(nCar.car.x + Math.cos(nCar.car.rotation + -Math.PI/4)*nCar.lenghtsensors/2, nCar.car.y + Math.sin(nCar.car.rotation + -Math.PI/4)*nCar.lenghtsensors/2);
     sensor2.setRotation(nCar.car.rotation - Math.PI/4);
 
     
-    //nCar.sensor[2].position = {x:nCar.car.x + Math.cos(nCar.car.rotation)*nCar.lenghtsensors/2,y:nCar.car.y + Math.sin(nCar.car.rotation)*nCar.lenghtsensors/2};
+    // nCar.sensor[2].position = {x:nCar.car.x + Math.cos(nCar.car.rotation)*nCar.lenghtsensors/2,y:nCar.car.y + Math.sin(nCar.car.rotation)*nCar.lenghtsensors/2};
     nCar.sensor[2].angle = nCar.car.rotation*(180/Math.PI);
     nCar.sensor[2].setPosition(nCar.car.x + Math.cos(nCar.car.rotation)*100/2, nCar.car.y + Math.sin(nCar.car.rotation)*100/2);
     sensor3.setPosition(nCar.car.x + Math.cos(nCar.car.rotation)*100/2, nCar.car.y + Math.sin(nCar.car.rotation)*100/2);
     sensor3.setRotation(nCar.car.rotation);
 
-
-
-   
 }
 
 //  **********  Create Text objects  ********** 
@@ -282,7 +283,7 @@ function createTextObject(g){
     generationT = g.add.text(1130, 212, "Gen: ", { fontSize: "32px", fill: "#fff" });
 
 
-    //Text neural network
+    // Text neural network
 
     sens1 = g.add.text(16, 160, "Sen1: 0", { fontSize: "32px", fill: "#fff" });
     sens2 = g.add.text(16, 196, "Sen2: 0", { fontSize: "32px", fill: "#fff" });
@@ -290,8 +291,8 @@ function createTextObject(g){
 
     velocityX = g.add.text(16, 338, "VelocityX: 0", { fontSize: "32px", fill: "#fff" });
     velocityY = g.add.text(16, 372, "VelocityY: 0", { fontSize: "32px", fill: "#fff" });
-    //nCar.velocityX
-    //nCar.velocityY
+    // nCar.velocityX
+    // nCar.velocityY
 
 
     output = g.add.text(16, 268, "Out: 0.90990", { fontSize: "32px", fill: "#fff" });
@@ -302,7 +303,7 @@ function createTextObject(g){
 
 //  **********  Debug mode  ********** 
 function debugMode(g){
-    //Debug kod så man ser kollitionsområdena
+    // Debug kod så man ser kollitionsområdena
     g.matter.world.createDebugGraphic();
 }
 
@@ -314,19 +315,19 @@ function debugMode(g){
 
 //  **********  Set positions on all the sensors  ********** 
 function setPositionOnSensors(g){
-    //Trackers in scene
+    // Trackers in scene
     tracker = [];
     trackerMatter = [];
     for(let i = 0; i<30;i++){
         if(i<5 || 7<i && i<10 || 11<i && i<17 || 17<i && i<21 || 23<i && i<27 || 27<i && i<30){
-            tracker[i] = g.add.rectangle(0, 0, 4, 80, COLORLINE);
+            tracker[i] = g.add.rectangle(0, 0, 4, 80, COLOR_ROADLINE);
         }
         else if(4<i && i<8 || 9<i && i<12 || i == 17 || i == 27 || 20<i && i<24){
-            tracker[i] = g.add.rectangle(0, 0, 80, 4, COLORLINE); //
+            tracker[i] = g.add.rectangle(0, 0, 80, 4, COLOR_ROADLINE); //
         }
     }
 
-    //Set position of visible tracker
+    // Set position of visible tracker
     tracker[0].setPosition(560, 154);
     tracker[1].setPosition(650, 154);
     tracker[2].setPosition(740, 154);
@@ -358,8 +359,7 @@ function setPositionOnSensors(g){
     tracker[28].setPosition(470,154);
     tracker[29].setPosition(380,154);
 
-    //Physical sensors that can feel the car!
-
+    // Physical sensors that can feel the car!
     trackerMatter[0] = g.matter.add.rectangle(560, 154, 4, 80, opt);
     trackerMatter[1] = g.matter.add.rectangle(650, 154, 4, 80, opt);
     trackerMatter[2] = g.matter.add.rectangle(740, 154, 4, 80, opt);
