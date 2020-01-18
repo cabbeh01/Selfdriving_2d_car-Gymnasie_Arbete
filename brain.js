@@ -152,15 +152,22 @@ function crossOver(n1, n2){
 
 
 // Send current generation of genomes to the server to save as a file
-function saveGeneration(){
+function saveGeneration(x){
 	console.log("Saving generation");
 	let filename = "undefined";
 	if(!document.getElementById("name_genome").value == ""){
 		filename = document.getElementById("name_genome").value;
 	}
-	
+	let saveGeneration;
 	// Create array of genomes objects 
-	let saveGeneration = genomes.map(function(genome){ return genome.toJSON(); });
+	if(x){
+		saveGeneration = genomes.map(function(genome){ return genome.toJSON(); });
+	}
+	else{
+		saveGeneration = genomes[genome].toJSON();
+	}
+	
+	
 	let serializedGen = JSON.stringify(saveGeneration);
 
 	downloadGeneration(serializedGen, filename+".json", "text/plain");
@@ -189,9 +196,18 @@ function loadGeneration(){
 		let importGenome = JSON.parse(reader.result); // Array of Objects.
 		genome = 0;
 		generation = 0;
-		genomes = []
 		// Load genomes in to current genomes
-		genomes = importGenome.map(function(genome){ return Network.fromJSON(genome) });
+
+		console.log(importGenome.length);
+		if(importGenome.length != 50){
+			genomes = [50]
+			genomes[generation] = Network.fromJSON(importGenome);
+		}
+		else {
+			genomes = []
+			genomes = importGenome.map(function(genome){ return Network.fromJSON(genome) });
+		}
+
 		console.log(genomes); // You can index every object
 			
 		nCar.ResetCar(true);
