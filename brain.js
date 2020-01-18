@@ -19,7 +19,7 @@ Sen3-
 let Network = synaptic.Network;
 let Architect = synaptic.Architect;
 
-// Creation of the network
+// ******* Creation of the network *******
 
 // let inputLayer = new Layer(3);
 let inputLayer = 3; 
@@ -45,9 +45,7 @@ let genome = 0;
 
 
 
-// Training the network
-
-
+// ******* Training the network *******
 function activate(data){
     return genomes[genome].activate(data);
 }
@@ -153,7 +151,7 @@ function crossOver(n1, n2){
 }
 
 
-// Send the current generation genomes to the server to save as a file
+// Send current generation of genomes to the server to save as a file
 function saveGeneration(){
 	console.log("Saving generation");
 	let filename = "undefined";
@@ -177,8 +175,7 @@ function downloadGeneration(content, fileName, contentType) {
 }
 
 
-// Load generation
-
+// Load choosen generation and push it to the model
 function loadGeneration(){
 	console.log("Loading generation");
 	let selectedFile = document.getElementById("get_the_file").files[0];
