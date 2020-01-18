@@ -3,7 +3,7 @@
 let ms = 0;
 let s = 0;
 
-
+// Function that counts
 function add(){
     ms++;
     if(ms >= 100){
@@ -13,10 +13,12 @@ function add(){
     startTimer();
 }
 
+// Function that starts the timer
 function startTimer(){
     t = setTimeout(add,10);
 }
 
+//Function that starts 
 function stopTimer(){
     clearTimeout(t);
     temp = (s+(0.1*ms)).toFixed(2);
