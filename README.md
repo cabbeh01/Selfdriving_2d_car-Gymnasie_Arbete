@@ -1,4 +1,4 @@
-# Självkörande tvådimensionell bil Gymnasie arbete - Casper Henningsson
+# Självkörande tvådimensionell bil Gymnasie arbete -      Casper Henningsson
 ![](completed.gif)
 
 Det här arbetet handlar om att med hjälp av inmatningar och använding utav ett neuralt nätverk kunna göra beslut. I detta fallet kunna göra beslut på hur en 2d bil ska kunna ta sig fram på en väg för att inte kollidera. Till  sin hjälp kommer bilen ha ett visst antal sensorer som känner av avståndet mellan bilen och vägkanten.
