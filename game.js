@@ -74,6 +74,7 @@ function preload ()
     
 }
 
+// Function that declares every important object before changing gamedata and values
 function create ()
 {
     let shapes = this.cache.json.get("shapes");
@@ -117,9 +118,10 @@ function create ()
     createTextObject(this);
     setPositionOnSensors(this);
 
-    
     startTimer();
 
+
+    //Collision detection
     this.matterCollision.addOnCollideStart({
         objectA: nCar.car,
         objectB: road,
@@ -174,6 +176,7 @@ function create ()
     // debugMode(this);
 }
 
+// Update function that updates every frame
 function update (timestamp, elapsed)
 {
     // Counts to correct frame then runs physicsRend
@@ -218,7 +221,7 @@ function physicsRend(currentframe) {
 }
     
 function renderGrapichs(){
-    // Rendering graphics related stuff here
+    // Rendering graphics related texts here
     xText.setText("X: "+ Math.round(nCar.car.x));
     yText.setText("Y: "+ Math.round(nCar.car.y));
     rText.setText(Math.round(nCar.car.rotation*(180/Math.PI)) +"°");
@@ -229,8 +232,7 @@ function renderGrapichs(){
     stopwatch.setText("Time: " +s+"s "+ ms+"hs", { fontSize: "32px", fill: "#fff" });
     runTime.setText("Run time: " +totmin +":"+ +tots+":"+ totms+"", { fontSize: "32px", fill: "#fff" });
 
-    // Neural network
-
+    // Neural network sensors
     sens1.setText("Sens 1: " + nSens[0]);
     sens2.setText("Sens 2: " + nSens[1]);
     sens3.setText("Sens 3: " + nSens[2]);
@@ -246,12 +248,12 @@ function renderGrapichs(){
     // sensor[0].position.x = nCar.car.x + Math.cos(nCar.car.rotation + Math.PI/4)*lenghtsensors/2;
     // sensor[0].position.y = nCar.car.y + Math.sin(nCar.car.rotation + Math.PI/4)*lenghtsensors/2;
 
+
+    // Rendering the sensor graphics
     nCar.sensor[0].angle = (nCar.car.rotation + Math.PI/4)*(180/Math.PI);
     nCar.sensor[0].setPosition(nCar.car.x + Math.cos(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2, nCar.car.y + Math.sin(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2);
     sensor1.setPosition(nCar.car.x + Math.cos(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2, nCar.car.y + Math.sin(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2);
     sensor1.setRotation(nCar.car.rotation + Math.PI/4);
-
-
 
     // nCar.sensor[1].position ={x:nCar.car.x + Math.cos(nCar.car.rotation + -Math.PI/4)*nCar.lenghtsensors/2,y:nCar.car.y + Math.sin(nCar.car.rotation + -Math.PI/4)*nCar.lenghtsensors/2};
     nCar.sensor[1].angle = (nCar.car.rotation - Math.PI/4)*(180/Math.PI);
@@ -259,7 +261,6 @@ function renderGrapichs(){
     sensor2.setPosition(nCar.car.x + Math.cos(nCar.car.rotation + -Math.PI/4)*nCar.lenghtsensors/2, nCar.car.y + Math.sin(nCar.car.rotation + -Math.PI/4)*nCar.lenghtsensors/2);
     sensor2.setRotation(nCar.car.rotation - Math.PI/4);
 
-    
     // nCar.sensor[2].position = {x:nCar.car.x + Math.cos(nCar.car.rotation)*nCar.lenghtsensors/2,y:nCar.car.y + Math.sin(nCar.car.rotation)*nCar.lenghtsensors/2};
     nCar.sensor[2].angle = nCar.car.rotation*(180/Math.PI);
     nCar.sensor[2].setPosition(nCar.car.x + Math.cos(nCar.car.rotation)*100/2, nCar.car.y + Math.sin(nCar.car.rotation)*100/2);
@@ -270,6 +271,8 @@ function renderGrapichs(){
 
 //  **********  Create Text objects  ********** 
 function createTextObject(g){
+
+    // Declaring textobjects into the game
     xText = g.add.text(16, 16, "X: 0", { fontSize: "32px", fill: "#fff" });
     yText = g.add.text(16, 52, "Y: 0", { fontSize: "32px", fill: "#fff" });
     rText = g.add.text(16, 88, "0°", { fontSize: "32px", fill: "#fff" });
@@ -287,7 +290,6 @@ function createTextObject(g){
     genomeT = g.add.text(1110, 250, "Genome: ", { fontSize: "32px", fill: "#fff" });
 
     // Text neural network
-
     sens1 = g.add.text(16, 338, "Sen1: 0", { fontSize: "32px", fill: "#fff" });
     sens2 = g.add.text(16, 372, "Sen2: 0", { fontSize: "32px", fill: "#fff" });
     sens3 = g.add.text(16, 406, "Sen3: 0", { fontSize: "32px", fill: "#fff" });
@@ -302,11 +304,9 @@ function createTextObject(g){
 }
 
 
-
-
 //  **********  Debug mode  ********** 
 function debugMode(g){
-    // Debug kod så man ser kollitionsområdena
+    // Debug code to show collision area
     g.matter.world.createDebugGraphic();
 
 }
@@ -314,6 +314,9 @@ function debugMode(g){
 let debugState = true;
 
 function debugONOFF(){
+
+    // Debug code to switch it on or off
+
     if(!debugState){
         debugState = true;
         document.getElementById('debug').value = "Debug: On";
