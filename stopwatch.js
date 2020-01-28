@@ -3,13 +3,30 @@
 let ms = 0;
 let s = 0;
 
+let totms = 0;
+let tots = 0;
+let totmin = 0;
+
 // Function that counts
 function add(){
     ms++;
+    totms++;
     if(ms >= 100){
         ms = 0;
         s++;
     }
+    
+    if(totms >= 100){
+        totms = 0;
+        tots++;
+
+
+        if(tots >= 60){
+            tots = 0;
+            totmin++;
+        }
+    }
+    
     startTimer();
 }
 

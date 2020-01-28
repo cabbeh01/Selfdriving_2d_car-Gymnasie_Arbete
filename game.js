@@ -190,7 +190,7 @@ function update (timestamp, elapsed)
 function physicsRend(currentframe) {
     // Phys checks and server IO events update state of entities here
     nCar.Update();
-    if(cursors.down.isDown){
+    /*if(cursors.down.isDown){
         nCar.MoveBackwards(nCar.car.rotation);
         // nCar.Brake();
     }
@@ -202,7 +202,7 @@ function physicsRend(currentframe) {
     }
     if(cursors.right.isDown){
         nCar.Steer(1);
-    }
+    }*/
 
     // console.log([nSens[0],nSens[1],nSens[1]]);
     if(activate([nSens[0],nSens[1],nSens[2]]) > 0.5){
@@ -227,6 +227,7 @@ function renderGrapichs(){
     fps2Text.setText("FPS Phys: " + Math.round(fps.fps));
 
     stopwatch.setText("Time: " +s+"s "+ ms+"hs", { fontSize: "32px", fill: "#fff" });
+    runTime.setText("Run time: " +totmin +":"+ +tots+":"+ totms+"", { fontSize: "32px", fill: "#fff" });
 
     // Neural network
 
@@ -237,8 +238,8 @@ function renderGrapichs(){
     velocityX.setText("VelocityX: " + Math.round(nCar.velocityX));
     velocityY.setText("VelocityY: " + Math.round(nCar.velocityY));
 
-    generationT.setText("Gen: " + generation);
-
+    generationT.setText("Generation: " + generation);
+    genomeT.setText("Genome: " + genome +"/" + populationSize);
     output.setText("Output: " + activate([nSens[0],nSens[1],nSens[2]]));
 
     // nCar.sensor[0].position = {x:nCar.car.x + Math.cos(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2,y:nCar.car.y + Math.sin(nCar.car.rotation + Math.PI/4)*nCar.lenghtsensors/2};
@@ -279,23 +280,25 @@ function createTextObject(g){
 
     stopwatch = g.add.text(1130, 122, "Stopwatch: ", { fontSize: "32px", fill: "#fff" });
     bestTime = g.add.text(1035, 152, "Best Time: ", { fontSize: "32px", fill: "#fff" });
+    runTime = g.add.text(470,720,"Runtime: ",{ fontSize: "48px", fill: "#fff" });
 
-    generationT = g.add.text(1130, 212, "Gen: ", { fontSize: "32px", fill: "#fff" });
 
+    generationT = g.add.text(1035, 212, "Generation: ", { fontSize: "32px", fill: "#fff" });
+    genomeT = g.add.text(1110, 250, "Genome: ", { fontSize: "32px", fill: "#fff" });
 
     // Text neural network
 
-    sens1 = g.add.text(16, 160, "Sen1: 0", { fontSize: "32px", fill: "#fff" });
-    sens2 = g.add.text(16, 196, "Sen2: 0", { fontSize: "32px", fill: "#fff" });
-    sens3 = g.add.text(16, 232, "Sen3: 0", { fontSize: "32px", fill: "#fff" });
+    sens1 = g.add.text(16, 338, "Sen1: 0", { fontSize: "32px", fill: "#fff" });
+    sens2 = g.add.text(16, 372, "Sen2: 0", { fontSize: "32px", fill: "#fff" });
+    sens3 = g.add.text(16, 406, "Sen3: 0", { fontSize: "32px", fill: "#fff" });
 
-    velocityX = g.add.text(16, 338, "VelocityX: 0", { fontSize: "32px", fill: "#fff" });
-    velocityY = g.add.text(16, 372, "VelocityY: 0", { fontSize: "32px", fill: "#fff" });
+    velocityX = g.add.text(16, 160, "VelocityX: 0", { fontSize: "32px", fill: "#fff" });
+    velocityY = g.add.text(16, 196, "VelocityY: 0", { fontSize: "32px", fill: "#fff" });
     // nCar.velocityX
     // nCar.velocityY
 
-
-    output = g.add.text(16, 268, "Out: 0.90990", { fontSize: "32px", fill: "#fff" });
+    
+    output = g.add.text(16, 444, "Out: 0.90990", { fontSize: "32px", fill: "#fff" });
 }
 
 
@@ -305,9 +308,68 @@ function createTextObject(g){
 function debugMode(g){
     // Debug kod så man ser kollitionsområdena
     g.matter.world.createDebugGraphic();
+
 }
 
+let debugState = true;
 
+function debugONOFF(){
+    if(!debugState){
+        debugState = true;
+        document.getElementById('debug').value = "Debug: On";
+        output.visible = true;
+        xText.visible = true;
+        yText.visible = true;
+        rText.visible = true;
+        travelText.visible = true;
+        fpsText.visible = true;
+        fps2Text.visible = true;
+        stopwatch.visible = true;
+        bestTime.visible = true;
+        generationT.visible = true;
+        genomeT.visible = true;
+        sens1.visible = true;
+        sens2.visible = true;
+        sens3.visible = true;
+        velocityX.visible = true;
+        velocityY.visible = true;
+        sensor1.visible = true;
+        sensor2.visible = true;
+        sensor3.visible = true;
+        for(let i = 0; i<30;i++){
+            tracker[i].visible = true;
+        }
+        
+    }
+    else{
+        debugState = false;
+        document.getElementById('debug').value = "Debug: Off";
+        output.visible = false;
+        xText.visible = false;
+        yText.visible = false;
+        rText.visible = false;
+        travelText.visible = false;
+        fpsText.visible = false;
+        fps2Text.visible = false;
+        stopwatch.visible = false;
+        bestTime.visible = false;
+        generationT.visible = false;
+        genomeT.visible = false;
+        sens1.visible = false;
+        sens2.visible = false;
+        sens3.visible = false;
+        velocityX.visible = false;
+        velocityY.visible = false;
+        sensor1.visible = false;
+        sensor2.visible = false;
+        sensor3.visible = false;
+        for(let i = 0; i<30;i++){
+            tracker[i].visible = false;
+        }
+        
+    }
+
+}
 
 
 
