@@ -230,7 +230,7 @@ function renderGrapichs(){
     fps2Text.setText("FPS Phys: " + Math.round(fps.fps));
 
     stopwatch.setText("Time: " +s+"s "+ ms+"hs", { fontSize: "32px", fill: "#fff" });
-    runTime.setText("Run time: " +totmin +":"+ +tots+":"+ totms+"", { fontSize: "32px", fill: "#fff" });
+    runTime.setText("Runtime: " +totmin +":"+ +tots+":"+ totms+"", { fontSize: "32px", fill: "#fff" });
 
     // Neural network sensors
     sens1.setText("Sens 1: " + nSens[0]);
