@@ -1,0 +1,12 @@
+Start av simuleringsprogrammet
+
+ - Öppna Visual studio code
+
+Installera liveserver
+
+https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
+
+Sedan öppnar du detta projektet och startar liveservern så bör allt fungera
+
+Annars får du som användare inte det att fungera så kan du öppna simuleringsprogrammet på min github
+https://cabbeh01.github.io/Selfdriving_2d_car-Gymnasie_Arbete/

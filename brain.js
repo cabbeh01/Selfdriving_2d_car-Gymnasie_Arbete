@@ -23,7 +23,7 @@ let Architect = synaptic.Architect;
 
 // let inputLayer = new Layer(3);
 let inputLayer = 3; 
-let hiddenLayer = 4;
+let hiddenLayer = 4; // Default 4
 let outputLayer = 1 
 
 let fitness = 0;
