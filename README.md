@@ -10,5 +10,6 @@ Det här arbetet handlar om att med hjälp av inmatningar och använding utav et
 ![Bild på bilen i spelet](https://github.com/cabbeh01/Selfdriving_2d_car-Gymnasie_Arbete/blob/master/Graphics/showcase.png)
 
 # Vad lärde jag mig
-- Jag har lärt mig grundläggande kunskaper om hur man använder ramverket phaser 3
-- Jag har lärt mig att bygga ihop ett neuralt nätverk samman kopplat med genetiska algoritmer
+- Grundläggande kunskaper om hur man använder ramverket phaser 3, synaptic, matter js
+- Bygga ihop ett neuralt nätverk samman kopplat med genetiska algoritmer
+- Hur man använder sig av genetiska algoritmer
