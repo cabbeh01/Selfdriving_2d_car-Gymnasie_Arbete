@@ -11,5 +11,5 @@ Det här arbetet handlar om att med hjälp av inmatningar och använding utav et
 
 # Vad lärde jag mig
 - Grundläggande kunskaper om hur man använder ramverket phaser 3, synaptic, matter js
-- Bygga ihop ett neuralt nätverk samman kopplat med genetiska algoritmer
+- Bygga ihop ett neuralt nätverk sammankopplat med genetiska algoritmer
 - Hur man använder sig av genetiska algoritmer
