@@ -1,5 +1,5 @@
 // This is the main file for the whole project. It contains the game part and communicate with the neuralnetwork javascript file
-
+import { PhaserMatterCollisionPlugin } from './phaser-matter-collision.js';
 // Configuration for Phaser api
 const config = {
     type: Phaser.AUTO,
