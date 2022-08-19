@@ -1,5 +1,5 @@
 // This is the main file for the whole project. It contains the game part and communicate with the neuralnetwork javascript file
-import { PhaserMatterCollisionPlugin } from './phaser-matter-collision.js';
+
 // Configuration for Phaser api
 const config = {
     type: Phaser.AUTO,
@@ -457,59 +457,3 @@ function setPositionOnSensors(g){
     trackerMatter[29] = g.matter.add.rectangle(380, 154, 4, 80, opt);
 
 }
-
-
-
-
-//Collision detection between car and road
-    /*this.matter.world.on("collisionstart", function (event, bodyA, bodyB) {
-        //console.log(bodyA.area + "  " + bodyA.parent.label);
-        //console.log(bodyB.area + "  " + bodyB.parent.label);
-        //console.log(event.separation);
-
-        Nsens1 = 0;
-        Nsens2 = 0;
-        Nsens3 = 0;
-        if(bodyA.parent.label === "road" && bodyB.parent.label === "car"){
-            nCar.ResetCar();
-        }
-        if(bodyA.parent.label === "car" && bodyB.parent.label === "tracker"){
-            nCar.countTracks++;
-        }
-        if(bodyA.parent.label === "road"){
-            for(let i = 0; i<3; i++){
-                if(event.source.pairs.collisionActive[i]){
-                    console.log(event.source.pairs.collisionActive[i].separation);
-                }
-                if(event.source.pairs.collisionActive[i].bodyB.label === "Sensor 2"){
-                    console.log(event.source.pairs.collisionActive[i].separation);
-                }
-                if(event.source.pairs.collisionActive[i].bodyB.label === "Sensor 3"){
-                    console.log(event.source.pairs.collisionActive[i].separation);
-                }
-            }
-        }
-        
-        
-
-//  .collision.separation
-        if(bodyA.parent.label === "road" && bodyB.parent.label === "Sensor 1"){
-            Nsens1 = 1;
-            console.log(event.source.pairs.collisionActive[0]);
-            console.log(bodyA.area + "  " + bodyA.parent.label);
-            console.log(bodyB.area + "  " + bodyB.parent.label);
-        }
-
-        if(bodyA.parent.label === "road" && bodyB.parent.label === "Sensor 2"){
-            Nsens2 = 1;
-            console.log(bodyA.area + "  " + bodyA.parent.label);
-            console.log(bodyB.area + "  " + bodyB.parent.label);
-        }
-
-        if(bodyA.parent.label === "road" && bodyB.parent.label === "Sensor 3"){
-            Nsens3 = 1;
-            console.log(bodyA.area + "  " + bodyA.parent.label);
-            console.log(bodyB.area + "  " + bodyB.parent.label);
-        }
-
-    });*/
